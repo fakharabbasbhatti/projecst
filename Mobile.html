@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Nexus OS Simulation</title>
+    
+    <!-- External CSS Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-main: #ffffff;
+            --accent-color: #00d2ff;
+        }
+
+        body {
+            background: #121212;
+            font-family: 'Inter', -apple-system, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        /* Device Frame - Industrial Design */
+        .device-container {
+            width: 360px;
+            height: 740px;
+            background: #000;
+            border-radius: 50px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 0 100px rgba(0, 210, 255, 0.2), inset 0 0 10px #333;
+            border: 4px solid #1a1a1a;
+        }
+
+        /* Hardware Details */
+        .speaker-grill {
+            width: 60px;
+            height: 5px;
+            background: #222;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        /* Screen Wrapper */
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s all ease;
+        }
+
+        /* Lock Screen Overlay */
+        #lock-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fingerprint-scanner {
+            font-size: 60px;
+            color: var(--accent-color);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        /* UI Elements */
+        .status-bar {
+            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 25px;
+            font-size: 12px;
+            color: white;
+            font-weight: 500;
+            z-index: 50;
+        }
+
+        /* Homescreen Widgets */
+        .widget-area {
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .weather-widget {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* App Launcher */
+        .app-launcher {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .app-item:active { transform: scale(0.9); }
+
+        .app-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+
+        /* Generic App Window */
+        .app-window {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            color: #333;
+            z-index: 80;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding-top: 40px;
+        }
+
+        .app-window.active { top: 0; }
+
+        .app-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Bottom Control Bar */
+        .navigation-bar {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 90;
+        }
+
+        /* Utility Classes */
+        .bg-insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: white; }
+        .bg-settings { background: #555; color: white; }
+        .bg-music { background: #ff3b30; color: white; }
+        .bg-browser { background: #007aff; color: white; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #00d2ff; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="device-container">
+        <div class="speaker-grill"></div>
+        
+        <div class="screen" id="main-screen">
+            
+            <!-- 1. Lock Screen -->
+            <div id="lock-screen">
+                <div class="text-center mb-5">
+                    <h1 id="lock-time" style="font-size: 3rem; font-weight: 200;">12:00</h1>
+                    <p id="lock-date">Thursday, May 7</p>
+                </div>
+                <div class="fingerprint-scanner" onclick="unlockDevice()">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <p class="mt-3 text-secondary" style="font-size: 12px;">Touch sensor to unlock</p>
+            </div>
+
+            <!-- 2. Status Bar -->
+            <div class="status-bar">
+                <span id="nav-time">12:00</span>
+                <div class="d-flex gap-2">
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+            </div>
+
+            <!-- 3. Homescreen Content -->
+            <div class="widget-area">
+                <div class="weather-widget">
+                    <div>
+                        <h4 class="mb-0">24°C</h4>
+                        <small>Bahawalpur, PK</small>
+                    </div>
+                    <i class="fas fa-cloud-sun fa-2x text-warning"></i>
+                </div>
+            </div>
+
+            <div class="app-launcher">
+                <!-- App: Music -->
+                <div class="app-item" onclick="openApp('music-app')">
+                    <div class="app-icon bg-music"><i class="fas fa-music"></i></div>
+                    <small>Music</small>
+                </div>
+                <!-- App: Settings -->
+                <div class="app-item" onclick="openApp('settings-app')">
+                    <div class="app-icon bg-settings"><i class="fas fa-cog"></i></div>
+                    <small>Settings</small>
+                </div>
+                <!-- App: Browser -->
+                <div class="app-item" onclick="openApp('browser-app')">
+                    <div class="app-icon bg-browser"><i class="fas fa-globe"></i></div>
+                    <small>Browser</small>
+                </div>
+                <!-- App: Instagram -->
+                <div class="app-item">
+                    <div class="app-icon bg-insta"><i class="fab fa-instagram"></i></div>
+                    <small>Photos</small>
+                </div>
+            </div>
+
+            <!-- 4. Dynamic App Windows -->
+            
+            <!-- Settings App -->
+            <div id="settings-app" class="app-window">
+                <div class="app-header">
+                    <i class="fas fa-chevron-left me-3" onclick="closeApps()"></i>
+                    <h5 class="mb-0">Settings</h5>
+                </div>
+                <div class="p-3">
+                    <div class="list-group">
+                        <button class="list-group-item list-group-item-action d-flex justify-content-between" onclick="toggleTheme()">
+                            Dark Mode <i class="fas fa-moon"></i>
+                        </button>
+                        <button class="list-group-item list-group-item-action d-flex justify-content-between">
+                            Wi-Fi: Connected <i class="fas fa-wifi text-primary"></i>
+                        </button>
+                        <div class="list-group-item">
+                            <label class="form-label">Brightness</label>
+                            <input type="range" class="form-range" oninput="updateBrightness(this.value)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Music App -->
+            <div id="music-app" class="app-window" style="background: #111; color: white;">
+                <div class="app-header">
+                    <i class="fas fa-chevron-left me-3" onclick="closeApps()"></i>
+                    <h5 class="mb-0">Now Playing</h5>
+                </div>
+                <div class="p-4 text-center">
+                    <div class="mb-4 mt-3" style="width: 200px; height: 200px; background: #333; margin: auto; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                        <i class="fas fa-music fa-5x mt-5 text-secondary"></i>
+                    </div>
+                    <h4 class="mt-4">Safar-e-Ishq</h4>
+                    <p class="text-secondary">Arjit Singh</p>
+                    <div class="d-flex justify-content-center align-items-center gap-4 mt-5">
+                        <i class="fas fa-step-backward fa-lg"></i>
+                        <i class="fas fa-play-circle fa-3x text-info"></i>
+                        <i class="fas fa-step-forward fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Nav Indicator -->
+            <div class="navigation-bar" onclick="closeApps()"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Engine -->
+    <script>
+        // 1. Time Logic
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            
+            document.getElementById('lock-time').innerText = timeStr;
+            document.getElementById('nav-time').innerText = timeStr;
+            document.getElementById('lock-date').innerText = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. Unlock Mechanism
+        function unlockDevice() {
+            const lockScreen = document.getElementById('lock-screen');
+            lockScreen.style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                lockScreen.style.display = 'none';
+            }, 800);
+        }
+
+        // 3. App Management
+        function openApp(appId) {
+            document.getElementById(appId).classList.add('active');
+        }
+
+        function closeApps() {
+            const apps = document.querySelectorAll('.app-window');
+            apps.forEach(app => app.classList.remove('active'));
+        }
+
+        // 4. Feature Functions
+        function toggleTheme() {
+            const screen = document.getElementById('main-screen');
+            if(screen.style.background === 'white') {
+                screen.style.background = 'var(--primary-gradient)';
+            } else {
+                screen.style.background = 'white';
+            }
+        }
+
+        function updateBrightness(val) {
+            const screen = document.getElementById('main-screen');
+            let opacity = val / 100;
+            if(opacity < 0.3) opacity = 0.3; // Don't go completely black
+            screen.style.filter = `brightness(${opacity})`;
+        }
+    </script>
+
+</body>
+</html>
