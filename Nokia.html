@@ -1,260 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nokia Premium Edition</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nokia Pro OS</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --accent-color: #0078ff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-main: #ffffff;
+        }
 
-  <!-- Bootstrap & Google Fonts -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <style>
-    :root {
-      --nokia-blue: #005AFF;
-      --glass: rgba(255, 255, 255, 0.15);
-      --border: rgba(255, 255, 255, 0.2);
-    }
+        body {
+            background: #050505;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
 
-    body {
-      background: #020617;
-      background-image: radial-gradient(circle at 20% 30%, #1e293b 0%, #020617 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-    }
+        /* Mobile Chassis */
+        .phone-frame {
+            width: 360px;
+            height: 740px;
+            background: #1a1a1a;
+            border-radius: 55px;
+            padding: 12px;
+            position: relative;
+            box-shadow: 0 0 0 4px #333, 0 30px 60px rgba(0,0,0,0.8);
+            border: 1px solid #444;
+        }
 
-    /* Mobile Frame */
-    .mobile {
-      width: 340px;
-      background: #0f172a;
-      border-radius: 50px;
-      padding: 12px;
-      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(255,255,255,0.1);
-      border: 2px solid #334155;
-      position: relative;
-    }
+        /* Hardware Details */
+        .power-btn {
+            position: absolute;
+            right: -3px; top: 180px;
+            width: 3px; height: 60px;
+            background: #444; border-radius: 0 3px 3px 0;
+        }
 
-    /* Hardware Buttons */
-    .mobile::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: 120px;
-      width: 4px;
-      height: 100px;
-      background: #334155;
-      border-radius: 0 5px 5px 0;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-    }
+        /* Screen with animated background */
+        .screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 45px;
+            overflow: hidden;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=1000');
+            background-size: 110% 110%;
+            animation: bgMove 20s infinite alternate linear;
+        }
 
-    /* Screen Context */
-    .screen {
-      background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop') no-repeat center center;
-      background-size: cover;
-      border-radius: 40px;
-      height: 650px;
-      overflow: hidden;
-      position: relative;
-      color: white;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
+        @keyframes bgMove {
+            from { background-position: 0% 0%; }
+            to { background-position: 100% 100%; }
+        }
 
-    /* Overlay for readability */
-    .screen-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.2);
-      z-index: 1;
-    }
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
 
-    .content-layer {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+        /* UI Content Layer */
+        .ui-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 25px;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
+        /* Top Bar Enhancements */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            padding: 5px 10px;
+        }
 
-    .clock {
-      text-align: center;
-      margin-top: 50px;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
+        /* Large Clock Section */
+        .hero-clock {
+            margin-top: 40px;
+            text-align: left;
+            padding-left: 10px;
+        }
 
-    .clock h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 64px;
-      margin: 0;
-    }
+        .hero-clock h1 {
+            font-size: 72px;
+            font-weight: 200;
+            letter-spacing: -2px;
+            margin: 0;
+            line-height: 1;
+        }
 
-    .clock p {
-      font-weight: 300;
-      opacity: 0.9;
-    }
+        .hero-clock p {
+            font-size: 18px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
 
-    .apps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 25px;
-      padding: 40px 25px;
-      margin-top: auto;
-      margin-bottom: 80px;
-    }
+        /* Modern Apps Layout */
+        .app-shelf {
+            margin-top: auto;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 20px 10px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+        }
 
-    .app-item {
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+        .app-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-    .app-icon {
-      width: 65px;
-      height: 65px;
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin: 0 auto 8px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    }
+        .app-box:active { transform: scale(0.9); }
 
-    .app-item:hover { transform: translateY(-8px); }
-    .app-item:hover .app-icon { background: var(--nokia-blue); border-color: transparent; }
+        .app-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-    .app-item span {
-      font-size: 12px;
-      font-weight: 400;
-      display: block;
-    }
+        .app-box span { font-size: 11px; font-weight: 500; opacity: 0.9; }
 
-    .bottom-nav {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 40px;
-    }
+        /* Dock (Bottom Favorite Apps) */
+        .dock {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            margin-bottom: 5px;
+        }
 
-    .nav-btn {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: 0.3s;
-      color: rgba(255,255,255,0.7);
-    }
+        .dock-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
 
-    .nav-btn:hover {
-      background: var(--glass);
-      color: white;
-    }
+        /* Navigation Pill */
+        .nav-pill {
+            width: 120px;
+            height: 5px;
+            background: white;
+            border-radius: 10px;
+            margin: 0 auto 5px;
+            opacity: 0.6;
+        }
 
-    .nokia-branding {
-      text-align: center;
-      color: #94a3b8;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 20px;
-      letter-spacing: 6px;
-      padding: 15px 0 10px;
-    }
-  </style>
+        .nokia-logo {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            color: #444;
+            font-weight: 700;
+            letter-spacing: 5px;
+        }
+
+    </style>
 </head>
 <body>
 
-  <div class="mobile">
-    <div class="screen">
-      <div class="screen-overlay"></div>
-      
-      <div class="content-layer">
-        <div class="top-bar">
-          <span><i class="fa-solid fa-signal"></i> 5G</span>
-          <span>11:26 <i class="fa-solid fa-battery-three-quarters ms-1"></i></span>
-        </div>
+    <div class="phone-frame">
+        <div class="power-btn"></div>
+        
+        <div class="screen">
+            <div class="overlay"></div>
+            
+            <div class="ui-wrapper">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="left-status">
+                        <i class="fa-solid fa-wifi me-1"></i>
+                        <span>Nokia 5G</span>
+                    </div>
+                    <div class="right-status">
+                        <i class="fa-solid fa-bluetooth-b me-2 opacity-50"></i>
+                        <span class="me-1">85%</span>
+                        <i class="fa-solid fa-battery-three-quarters"></i>
+                    </div>
+                </div>
 
-        <div class="clock">
-          <h1 id="time">12:00</h1>
-          <p id="date">Monday, May 9</p>
-        </div>
+                <!-- Clock Section -->
+                <div class="hero-clock">
+                    <h1 id="time">00:00</h1>
+                    <p id="date">Friday, May 9</p>
+                </div>
 
-        <div class="apps-grid">
-          <div class="app-item" onclick="openApp('Dialer')">
-            <div class="app-icon"><i class="fa-solid fa-phone"></i></div>
-            <span>Phone</span>
-          </div>
-          <div class="app-item" onclick="openApp('Messages')">
-            <div class="app-icon" style="background: rgba(34, 197, 94, 0.2);"><i class="fa-solid fa-comment"></i></div>
-            <span>Chat</span>
-          </div>
-          <div class="app-item" onclick="openApp('Gallery')">
-            <div class="app-icon" style="background: rgba(168, 85, 247, 0.2);"><i class="fa-solid fa-images"></i></div>
-            <span>Photos</span>
-          </div>
-          <div class="app-item" onclick="openApp('Spotify')">
-            <div class="app-icon"><i class="fa-solid fa-music"></i></div>
-            <span>Music</span>
-          </div>
-          <div class="app-item" onclick="openApp('Chrome')">
-            <div class="app-icon"><i class="fa-solid fa-globe"></i></div>
-            <span>Web</span>
-          </div>
-          <div class="app-item" onclick="openApp('Settings')">
-            <div class="app-icon"><i class="fa-solid fa-sliders"></i></div>
-            <span>Setup</span>
-          </div>
-        </div>
+                <!-- Main Apps Grid -->
+                <div class="app-shelf">
+                    <div class="app-box">
+                        <div class="app-icon" style="background: linear-gradient(135deg, #FF512F, #DD2476);"><i class="fa-solid fa-envelope"></i></div>
+                        <span>Mail</span>
+                    </div>
+                    <div class="app-box">
+                        <div class="app-icon" style="background: linear-gradient(135deg, #1D976C, #93F9B9);"><i class="fa-solid fa-calendar-days"></i></div>
+                        <span>Calendar</span>
+                    </div>
+                    <div class="app-box">
+                        <div class="app-icon" style="background: #1DA1F2;"><i class="fa-brands fa-twitter"></i></div>
+                        <span>Social</span>
+                    </div>
+                    <div class="app-box">
+                        <div class="app-icon" style="background: #FF0000;"><i class="fa-brands fa-youtube"></i></div>
+                        <span>Videos</span>
+                    </div>
+                </div>
 
-        <div class="bottom-nav">
-          <div class="nav-btn"><i class="fa-solid fa-chevron-left"></i></div>
-          <div class="nav-btn"><i class="fa-solid fa-circle"></i></div>
-          <div class="nav-btn"><i class="fa-solid fa-square"></i></div>
+                <!-- Dock Favorites -->
+                <div class="dock">
+                    <div class="dock-icon"><i class="fa-solid fa-phone-flip text-success"></i></div>
+                    <div class="dock-icon"><i class="fa-solid fa-message text-info"></i></div>
+                    <div class="dock-icon"><i class="fa-solid fa-camera"></i></div>
+                    <div class="dock-icon" style="background: white;"><i class="fa-brands fa-chrome text-primary"></i></div>
+                </div>
+
+                <div class="nav-pill"></div>
+            </div>
         </div>
-      </div>
+        
+        <div class="nokia-logo">NOKIA</div>
     </div>
 
-    <div class="nokia-branding">NOKIA</div>
-  </div>
+    <script>
+        function updateDisplay() {
+            const now = new Date();
+            
+            // Update Time
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('time').innerText = `${hours}:${minutes}`;
 
-  <script>
-    function updateClock() {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('time').innerText = `${h}:${m}`;
-      
-      const options = { weekday: 'long', month: 'long', day: 'numeric' };
-      document.getElementById('date').innerText = now.toLocaleDateString('en-US', options);
-    }
+            // Update Date
+            const options = { weekday: 'long', month: 'short', day: 'numeric' };
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', options);
+        }
 
-    function openApp(name) {
-      console.log(`Launching ${name}...`);
-      // Add haptic feedback simulation or transition here
-    }
+        // Add Click Sound/Vibration simulation
+        document.querySelectorAll('.app-box, .dock-icon').forEach(item => {
+            item.addEventListener('click', () => {
+                // Flash effect
+                item.style.opacity = '0.5';
+                setTimeout(() => item.style.opacity = '1', 100);
+                console.log("App Launched: " + item.querySelector('span')?.innerText || 'System App');
+            });
+        });
 
-    setInterval(updateClock, 1000);
-    updateClock();
-  </script>
+        setInterval(updateDisplay, 1000);
+        updateDisplay();
+    </script>
 </body>
 </html>
