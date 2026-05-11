@@ -1,120 +1,691 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikClone - Premium Video Feed</title>
     
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        :root {
+            --primary: #fe2c55;
+            --primary-dark: #d41947;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050810;
+            --bg-card: #111627;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #1a202c;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 64px rgba(0, 0, 0, 0.5);
+        }
+
         body {
-            background: #000;
-            color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
+            line-height: 1.5;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(254, 44, 85, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container-main { display: flex; height: 100vh; }
 
-        /* Sidebar Improvement */
+        /* ===== SIDEBAR ===== */
         .sidebar {
-            width: 250px; background: #000; border-right: 1px solid #222;
-            padding: 20px 0; position: fixed; height: 100vh; left: 0; top: 0; z-index: 100;
+            width: 280px;
+            background: var(--bg-dark);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar-logo {
-            padding: 0 20px 30px; font-size: 24px; font-weight: 800;
-            color: #fff; display: flex; align-items: center; gap: 10px;
+            padding: 0 24px 40px;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-logo i {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--primary), #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            flex: 1;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 8px;
         }
 
         .sidebar-nav a {
-            display: flex; align-items: center; padding: 12px 20px;
-            color: #fff; text-decoration: none; font-size: 18px; font-weight: 600;
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .sidebar-nav a:hover, .sidebar-nav a.active {
-            background: rgba(255, 255, 255, 0.1); color: #fe2c55;
+        .sidebar-nav a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
         }
 
-        .sidebar-nav i { margin-right: 15px; width: 24px; font-size: 20px; }
+        .sidebar-nav a:hover {
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
 
-        /* Feed with Snap Scrolling */
-        .main-content { margin-left: 250px; flex: 1; display: flex; justify-content: center; background: #000; }
+        .sidebar-nav a:hover::before {
+            opacity: 0.1;
+        }
+
+        .sidebar-nav a.active {
+            color: var(--primary);
+            background: rgba(254, 44, 85, 0.1);
+        }
+
+        .sidebar-nav a.active::before {
+            opacity: 0.15;
+        }
+
+        .sidebar-nav i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            font-size: 20px;
+        }
+
+        .sidebar-bottom {
+            padding: 20px 12px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--primary), #ff6b9d);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(254, 44, 85, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(254, 44, 85, 0.4);
+        }
+
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ===== MAIN FEED ===== */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            background: var(--bg-darker);
+            position: relative;
+            overflow: hidden;
+        }
 
         .feed {
-            width: 100%; max-width: 500px; height: 100vh;
-            overflow-y: scroll; scroll-snap-type: y mandatory; /* Crucial for TikTok feel */
+            width: 100%;
+            max-width: 520px;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            position: relative;
         }
 
-        .feed::-webkit-scrollbar { display: none; }
+        .feed::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .feed::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .feed::-webkit-scrollbar-thumb {
+            background: rgba(254, 44, 85, 0.4);
+            border-radius: 10px;
+        }
+
+        .feed::-webkit-scrollbar-thumb:hover {
+            background: rgba(254, 44, 85, 0.6);
+        }
 
         .video-item {
-            height: 100vh; width: 100%; position: relative;
-            scroll-snap-align: start; background: #000;
-            display: flex; align-items: center; justify-content: center;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            scroll-snap-align: start;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #000;
         }
 
         video {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        /* Video Overlay UI */
+        /* Loading Spinner */
+        .video-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(254, 44, 85, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* ===== VIDEO OVERLAY ===== */
         .video-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            padding: 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 32px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6), transparent);
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 280px;
         }
 
-        .video-overlay * { pointer-events: auto; }
+        .overlay-content {
+            pointer-events: auto;
+        }
 
-        .user-handle { font-weight: bold; font-size: 17px; margin-bottom: 10px; display: block; }
-        .video-desc { font-size: 15px; margin-bottom: 10px; }
-        
-        /* Floating Actions */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #ff6b9d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-handle {
+            display: block;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .user-name {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .follow-btn {
+            padding: 8px 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 22px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .follow-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .follow-btn.following {
+            background: transparent;
+            border: 1.5px solid var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .video-desc {
+            font-size: 15px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .video-music {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .video-music i {
+            font-size: 14px;
+        }
+
+        .music-bar {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+            margin-left: 4px;
+        }
+
+        .music-bar span {
+            width: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: musicPulse 0.6s ease-in-out infinite;
+        }
+
+        .music-bar span:nth-child(1) { height: 4px; animation-delay: 0s; }
+        .music-bar span:nth-child(2) { height: 8px; animation-delay: 0.1s; }
+        .music-bar span:nth-child(3) { height: 6px; animation-delay: 0.2s; }
+
+        @keyframes musicPulse {
+            0%, 100% { height: 4px; opacity: 0.6; }
+            50% { height: 12px; opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ACTION SIDEBAR ===== */
         .actions-sidebar {
-            position: absolute; right: 10px; bottom: 100px;
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
+            position: absolute;
+            right: 16px;
+            bottom: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 10;
         }
 
-        .action-item { text-align: center; }
+        .action-item {
+            text-align: center;
+            animation: slideInRight 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .action-item:nth-child(1) { animation-delay: 0.1s; }
+        .action-item:nth-child(2) { animation-delay: 0.2s; }
+        .action-item:nth-child(3) { animation-delay: 0.3s; }
+        .action-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .action-btn {
-            width: 45px; height: 45px; border-radius: 50%;
-            background: rgba(255,255,255,0.15); border: none;
-            color: white; font-size: 22px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.2s;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .action-btn.liked { color: #fe2c55; }
-        .action-item span { font-size: 12px; margin-top: 5px; display: block; }
 
-        /* Heart Animation on Double Tap */
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: -1;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.15);
+            border-color: var(--primary);
+        }
+
+        .action-btn:hover::before {
+            opacity: 0.15;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-btn.liked {
+            color: var(--primary);
+        }
+
+        .action-btn.liked::before {
+            opacity: 0.2;
+        }
+
+        .action-count {
+            font-size: 12px;
+            margin-top: 6px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover ~ .action-count {
+            color: var(--text-primary);
+        }
+
+        /* Heart Animation */
         .heart-animation {
-            position: absolute; font-size: 100px; color: #fe2c55;
-            opacity: 0; pointer-events: none; animation: heartFade 0.8s ease-out;
-            z-index: 100;
+            position: absolute;
+            font-size: 120px;
+            color: var(--primary);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 50;
+            animation: heartFade 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            text-shadow: 0 0 20px rgba(254, 44, 85, 0.6);
         }
 
         @keyframes heartFade {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(1.5); }
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.3);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -150px) scale(1.8);
+            }
         }
 
-        /* Right Suggestions Sidebar (Desktop Only) */
+        /* ===== RIGHT SIDEBAR ===== */
         .suggestions-sidebar {
-            width: 350px; padding: 20px; border-left: 1px solid #222;
+            width: 320px;
+            padding: 30px 20px;
+            border-left: 1px solid var(--border-color);
+            background: var(--bg-dark);
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
 
-        @media (max-width: 1024px) {
-            .suggestions-sidebar { display: none; }
-            .sidebar { width: 80px; }
-            .sidebar-nav span, .sidebar-logo span { display: none; }
-            .main-content { margin-left: 80px; }
+        .suggestions-sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .suggestions-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(254, 44, 85, 0.4);
+            border-radius: 10px;
+        }
+
+        .suggestions-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .user-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .user-card-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #4a90e2);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .user-card-info {
+            flex-grow: 1;
+        }
+
+        .user-card-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .user-card-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .follow-action {
+            padding: 6px 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .follow-action:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1400px) {
+            .suggestions-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 20px 0;
+            }
+
+            .sidebar-logo span {
+                display: none;
+            }
+
+            .sidebar-nav span {
+                display: none;
+            }
+
+            .sidebar-nav a {
+                justify-content: center;
+                padding: 12px;
+                margin: 0 8px;
+            }
+
+            .sidebar-bottom {
+                padding: 16px 8px;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .feed {
+                max-width: 100%;
+            }
+
+            .actions-sidebar {
+                right: 12px;
+                bottom: 100px;
+                gap: 20px;
+            }
+
+            .action-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+
+            .video-overlay {
+                padding: 24px 16px 16px;
+                min-height: 240px;
+            }
+
+            .user-handle {
+                font-size: 14px;
+            }
+
+            .video-desc {
+                font-size: 13px;
+            }
+
+            .actions-sidebar {
+                right: 8px;
+                bottom: 80px;
+            }
+
+            .action-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .action-count {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -124,17 +695,22 @@
     <!-- Left Sidebar -->
     <div class="sidebar">
         <div class="sidebar-logo">
-            <i class="fab fa-tiktok"></i> <span>TikClone</span>
+            <i class="fab fa-tiktok"></i>
+            <span>TikClone</span>
         </div>
+        
         <ul class="sidebar-nav">
             <li><a href="#" class="active"><i class="fas fa-home"></i> <span>For You</span></a></li>
             <li><a href="#"><i class="fas fa-compass"></i> <span>Explore</span></a></li>
-            <li><a href="#"><i class="fas fa-video"></i> <span>LIVE</span></a></li>
+            <li><a href="#"><i class="fas fa-video"></i> <span>Following</span></a></li>
+            <li><a href="#"><i class="fas fa-heart"></i> <span>Liked</span></a></li>
             <li><a href="#"><i class="far fa-user"></i> <span>Profile</span></a></li>
         </ul>
-        <div class="p-3">
-            <button class="btn w-100 fw-bold" style="background:#fe2c55; color:white;" id="createBtn">
-                <i class="fas fa-plus"></i> <span>Upload</span>
+
+        <div class="sidebar-bottom">
+            <button class="upload-btn">
+                <i class="fas fa-plus-circle"></i>
+                <span>Create</span>
             </button>
         </div>
     </div>
@@ -148,97 +724,284 @@
 
     <!-- Right Sidebar -->
     <div class="suggestions-sidebar">
-        <h6 class="text-secondary fw-bold mb-3">Suggested Accounts</h6>
+        <div class="suggestions-title">Suggested For You</div>
         <div id="suggestedUsers"></div>
     </div>
 </div>
 
 <script>
-    // Real video URLs (Sample samples)
+    // Enhanced Video Data with More Realistic Content
     const videoData = [
-        { id: 1, user: '@nature_vibes', desc: 'Beautiful waterfall! 🌊 #nature', likes: '1.2M', music: 'Original Sound', url: 'https://v16-webapp.tiktok.com/...' || 'https://www.w3schools.com/html/mov_bbb.mp4' },
-        { id: 2, user: '@chef_pro', desc: 'Best burger recipe ever 🍔 #foodie', likes: '800K', music: 'Cooking Beats', url: 'https://www.w3schools.com/html/movie.mp4' },
-        { id: 3, user: '@tech_guru', desc: 'Setup tour 2026 💻 #gaming', likes: '450K', music: 'Lo-Fi Chill', url: 'https://www.w3schools.com/html/mov_bbb.mp4' }
+        {
+            id: 1,
+            user: '@nature_vibes',
+            name: 'Sarah Chen',
+            desc: 'Waterfall paradise found! 🌊✨ The most peaceful place I\'ve been to this year',
+            likes: '1.2M',
+            comments: '42K',
+            shares: '380K',
+            music: 'Ambient Dreams',
+            avatar: '🌿',
+            url: 'https://www.w3schools.com/html/mov_bbb.mp4'
+        },
+        {
+            id: 2,
+            user: '@chef_pro',
+            name: 'Marcus Lee',
+            desc: 'This burger recipe changed my life 🍔🔥 Trust me, you need this',
+            likes: '850K',
+            comments: '28K',
+            shares: '156K',
+            music: 'Cooking Vibes',
+            avatar: '👨‍🍳',
+            url: 'https://www.w3schools.com/html/movie.mp4'
+        },
+        {
+            id: 3,
+            user: '@tech_guru',
+            name: 'Alex Rodriguez',
+            desc: 'My 2026 setup tour! Custom everything 💻🖱️ Building the dream workstation',
+            likes: '450K',
+            comments: '15K',
+            shares: '87K',
+            music: 'Lo-Fi Beats',
+            avatar: '💻',
+            url: 'https://www.w3schools.com/html/mov_bbb.mp4'
+        },
+        {
+            id: 4,
+            user: '@fitness_queen',
+            name: 'Jessica Park',
+            desc: 'Transformation Tuesday 💪 100 days of consistency = this result 🔥',
+            likes: '2.4M',
+            comments: '89K',
+            shares: '512K',
+            music: 'Power Up',
+            avatar: '💪',
+            url: 'https://www.w3schools.com/html/movie.mp4'
+        },
+        {
+            id: 5,
+            user: '@travel_tales',
+            name: 'Michael Wong',
+            desc: 'Lost in Tokyo\'s neon lights 🌃 What\'s your favorite city?',
+            likes: '1.8M',
+            comments: '56K',
+            shares: '234K',
+            music: 'Tokyo Dreams',
+            avatar: '✈️',
+            url: 'https://www.w3schools.com/html/mov_bbb.mp4'
+        }
     ];
 
     const feed = document.getElementById('feed');
+    let likedVideos = new Set();
 
     // Create Video Element
     function createVideoItem(data) {
         const item = document.createElement('div');
         item.className = 'video-item';
+        item.dataset.videoId = data.id;
+
         item.innerHTML = `
-            <video loop src="${data.url}" preload="auto"></video>
-            <div class="video-overlay">
-                <span class="user-handle">${data.user}</span>
-                <p class="video-desc">${data.desc}</p>
-                <div class="video-music"><i class="fas fa-music"></i> ${data.music}</div>
+            <div class="video-container">
+                <video loop preload="auto" src="${data.url}"></video>
+                <div class="video-loader" style="display:none;"></div>
             </div>
+
+            <div class="video-overlay">
+                <div class="overlay-content">
+                    <div class="user-info">
+                        <div class="user-avatar">${data.avatar}</div>
+                        <div class="user-details">
+                            <span class="user-handle">${data.user}</span>
+                            <span class="user-name">${data.name}</span>
+                        </div>
+                        <button class="follow-btn" data-following="false">Follow</button>
+                    </div>
+
+                    <p class="video-desc">${data.desc}</p>
+
+                    <div class="video-music">
+                        <i class="fas fa-music"></i>
+                        <span>${data.music}</span>
+                        <div class="music-bar">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="actions-sidebar">
                 <div class="action-item">
-                    <button class="action-btn like-btn"><i class="fas fa-heart"></i></button>
-                    <span>${data.likes}</span>
+                    <button class="action-btn like-btn" data-action="like">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="action-count">${formatNumber(data.likes)}</div>
                 </div>
                 <div class="action-item">
-                    <button class="action-btn"><i class="fas fa-comment-dots"></i></button>
-                    <span>2.4K</span>
+                    <button class="action-btn comment-btn" data-action="comment">
+                        <i class="far fa-comment-dots"></i>
+                    </button>
+                    <div class="action-count">${formatNumber(data.comments)}</div>
                 </div>
                 <div class="action-item">
-                    <button class="action-btn"><i class="fas fa-share"></i></button>
-                    <span>Share</span>
+                    <button class="action-btn share-btn" data-action="share">
+                        <i class="fas fa-share"></i>
+                    </button>
+                    <div class="action-count">${formatNumber(data.shares)}</div>
+                </div>
+                <div class="action-item">
+                    <button class="action-btn bookmark-btn" data-action="bookmark">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                    <div class="action-count">Save</div>
                 </div>
             </div>
         `;
 
-        // Double Click to Like
-        item.addEventListener('dblclick', function(e) {
-            const heart = document.createElement('i');
-            heart.className = 'fas fa-heart heart-animation';
-            heart.style.left = `${e.offsetX - 50}px`;
-            heart.style.top = `${e.offsetY - 50}px`;
-            item.appendChild(heart);
-            item.querySelector('.like-btn').classList.add('liked');
-            setTimeout(() => heart.remove(), 800);
+        const video = item.querySelector('video');
+        const likeBtn = item.querySelector('.like-btn');
+        const followBtn = item.querySelector('.follow-btn');
+
+        // Play/Pause on Click
+        video.addEventListener('click', () => {
+            video.paused ? video.play() : video.pause();
         });
 
-        // Click to Play/Pause
-        const v = item.querySelector('video');
-        v.addEventListener('click', () => v.paused ? v.play() : v.pause());
+        // Double Tap to Like
+        let lastTap = 0;
+        item.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            
+            if (tapLength < 300 && tapLength > 0 && !e.target.closest('.action-btn, .follow-btn')) {
+                handleLike(item, likeBtn, e);
+            }
+            lastTap = currentTime;
+        });
+
+        // Like Button Click
+        likeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleLike(item, likeBtn);
+        });
+
+        // Follow Button
+        followBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isFollowing = followBtn.dataset.following === 'true';
+            followBtn.dataset.following = !isFollowing;
+            followBtn.textContent = isFollowing ? 'Follow' : 'Following';
+            followBtn.classList.toggle('following', !isFollowing);
+        });
+
+        // Action Button Feedback
+        item.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                btn.style.animation = 'none';
+                setTimeout(() => {
+                    btn.style.animation = '';
+                }, 10);
+            });
+        });
 
         return item;
+    }
+
+    function handleLike(item, likeBtn, clickEvent) {
+        const videoId = item.dataset.videoId;
+        const isLiked = likedVideos.has(videoId);
+
+        if (!isLiked) {
+            likedVideos.add(videoId);
+            likeBtn.classList.add('liked');
+            likeBtn.innerHTML = '<i class="fas fa-heart"></i>';
+
+            // Create heart animation
+            if (clickEvent) {
+                const heart = document.createElement('i');
+                heart.className = 'fas fa-heart heart-animation';
+                heart.style.left = `${clickEvent.clientX}px`;
+                heart.style.top = `${clickEvent.clientY}px`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 900);
+            }
+        } else {
+            likedVideos.delete(videoId);
+            likeBtn.classList.remove('liked');
+            likeBtn.innerHTML = '<i class="far fa-heart"></i>';
+        }
+    }
+
+    function formatNumber(num) {
+        if (typeof num === 'string') {
+            return num;
+        }
+        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+        if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+        return num.toString();
     }
 
     // Load Videos
     videoData.forEach(vid => feed.appendChild(createVideoItem(vid)));
 
     // Intersection Observer for Auto-Play
+    const observerOptions = {
+        threshold: 0.7,
+        rootMargin: '0px'
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const video = entry.target.querySelector('video');
+            if (!video) return;
+
             if (entry.isIntersecting) {
-                video.play();
+                video.play().catch(() => {
+                    console.log('Autoplay prevented by browser');
+                });
             } else {
                 video.pause();
                 video.currentTime = 0;
             }
         });
-    }, { threshold: 0.8 });
+    }, observerOptions);
 
     document.querySelectorAll('.video-item').forEach(item => observer.observe(item));
 
-    // Simple Suggestion Generator
-    const users = ['ali_fitness', 'zara_style', 'travel_bug'];
-    users.forEach(u => {
-        document.getElementById('suggestedUsers').innerHTML += `
-            <div class="d-flex align-items-center mb-3">
-                <div style="width:40px; height:40px; border-radius:50%; background:#444; margin-right:10px"></div>
-                <div class="flex-grow-1">
-                    <div class="fw-bold" style="font-size:14px">@${u}</div>
-                    <div class="text-secondary" style="font-size:12px">Suggested for you</div>
-                </div>
-                <button class="btn btn-sm btn-outline-danger py-0 px-3 fw-bold">Follow</button>
+    // Generate Suggested Users
+    const suggestedUsers = [
+        { name: 'ali_fitness', fullName: 'Ali Khan', emoji: '💪' },
+        { name: 'zara_style', fullName: 'Zara Ahmed', emoji: '✨' },
+        { name: 'travel_bug', fullName: 'Jamie Brown', emoji: '🌍' },
+        { name: 'art_creator', fullName: 'Emma Wilson', emoji: '🎨' },
+        { name: 'music_vibes', fullName: 'Dev Patel', emoji: '🎵' }
+    ];
+
+    const suggestedContainer = document.getElementById('suggestedUsers');
+    suggestedUsers.forEach(user => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        card.innerHTML = `
+            <div class="user-card-avatar">${user.emoji}</div>
+            <div class="user-card-info">
+                <div class="user-card-name">@${user.name}</div>
+                <div class="user-card-label">${user.fullName}</div>
             </div>
+            <button class="follow-action">Follow</button>
         `;
+
+        card.querySelector('.follow-action').addEventListener('click', (e) => {
+            e.target.textContent = e.target.textContent === 'Follow' ? 'Following' : 'Follow';
+            e.target.style.opacity = '0.7';
+            setTimeout(() => {
+                e.target.style.opacity = '1';
+            }, 200);
+        });
+
+        suggestedContainer.appendChild(card);
     });
 </script>
 
