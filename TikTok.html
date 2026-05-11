@@ -1,343 +1,853 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TikTok Clone UI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Clone</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        body {
+            background: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden;
+        }
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        .container-main {
+            display: flex;
+            height: 100vh;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #121212;
+            border-right: 1px solid #333;
+            overflow-y: auto;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
 
-    body {
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-    }
+        .sidebar-logo {
+            padding: 0 20px 30px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #00f7ef;
+            text-align: center;
+        }
 
-    .top-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 10px 20px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-    }
+        .sidebar-nav {
+            list-style: none;
+        }
 
-    .top-header h4 {
-      font-size: 18px;
-      margin: 0;
-      font-weight: bold;
-    }
+        .sidebar-nav li {
+            padding: 0;
+            margin: 0;
+        }
 
-    .video-container {
-      height: 100vh;
-      scroll-snap-type: y mandatory;
-      overflow-y: scroll;
-    }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
 
-    .video-container::-webkit-scrollbar {
-      display: none;
-    }
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            color: #00f7ef;
+            background: rgba(0, 247, 239, 0.1);
+            border-left: 3px solid #00f7ef;
+            padding-left: 17px;
+        }
 
-    .video-card {
-      position: relative;
-      height: 100vh;
-      scroll-snap-align: start;
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      padding: 20px;
-      background-size: cover;
-      background-position: center;
-    }
+        .sidebar-nav i {
+            margin-right: 15px;
+            width: 24px;
+        }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.1));
-    }
+        .sidebar-button {
+            padding: 20px;
+        }
 
-    .video-info {
-      position: relative;
-      z-index: 2;
-      width: 75%;
-      margin-bottom: 80px;
-    }
+        .btn-create {
+            width: 100%;
+            background: linear-gradient(135deg, #00f7ef, #0084ff);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: 16px;
+        }
 
-    .video-info h5 {
-      font-weight: bold;
-    }
+        .btn-create:hover {
+            transform: scale(1.05);
+        }
 
-    .video-info p {
-      font-size: 14px;
-      margin-top: 8px;
-    }
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            display: flex;
+            background: #0a0a0a;
+        }
 
-    .side-icons {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 100px;
-    }
+        /* Feed */
+        .feed {
+            flex: 1;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
 
-    .icon-box {
-      text-align: center;
-      cursor: pointer;
-    }
+        .feed::-webkit-scrollbar {
+            width: 8px;
+        }
 
-    .icon-box i {
-      font-size: 28px;
-      margin-bottom: 5px;
-      transition: 0.3s;
-    }
+        .feed::-webkit-scrollbar-track {
+            background: transparent;
+        }
 
-    .icon-box i:hover {
-      transform: scale(1.2);
-      color: #ff0050;
-    }
+        .feed::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
 
-    .icon-box span {
-      font-size: 13px;
-      display: block;
-    }
+        .feed::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
 
-    .profile-img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-      object-fit: cover;
-    }
+        .video-item {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #111;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      z-index: 1000;
-      padding: 8px 0;
-    }
+        .video-item.loading {
+            background: linear-gradient(135deg, #2a2a3e 0%, #1a213e 100%);
+        }
 
-    .bottom-nav .nav-item {
-      text-align: center;
-      color: #fff;
-      flex: 1;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+        .video-item:hover .video-overlay {
+            opacity: 1;
+        }
 
-    .bottom-nav .nav-item:hover {
-      color: #ff0050;
-    }
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #000;
+        }
 
-    .bottom-nav i {
-      font-size: 22px;
-      display: block;
-      margin-bottom: 3px;
-    }
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #00f7ef;
+        }
 
-    .create-btn {
-      background: linear-gradient(45deg, #25f4ee, #fe2c55);
-      padding: 8px 14px;
-      border-radius: 10px;
-      color: #fff;
-    }
+        .video-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            z-index: 10;
+        }
 
-    .music {
-      animation: rotate 5s linear infinite;
-      border-radius: 50%;
-    }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-    @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #00f7ef;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+        }
 
-    @media(max-width: 768px) {
-      .video-info {
-        width: 65%;
-      }
+        .user-details h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
 
-      .icon-box i {
-        font-size: 24px;
-      }
-    }
-  </style>
+        .user-details p {
+            margin: 0;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .follow-btn {
+            margin-left: auto;
+            background: #00f7ef;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .follow-btn:hover {
+            background: #00e6de;
+        }
+
+        .video-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #eee;
+        }
+
+        .video-music {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .video-music i {
+            margin-right: 6px;
+        }
+
+        /* Side Bar Actions */
+        .actions-sidebar {
+            position: absolute;
+            right: 20px;
+            bottom: 80px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 24px;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 247, 239, 0.2);
+            border-color: #00f7ef;
+            color: #00f7ef;
+            transform: scale(1.1);
+        }
+
+        .action-count {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 6px;
+            color: #ccc;
+        }
+
+        .action-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Right Sidebar - Suggested */
+        .suggestions-sidebar {
+            width: 300px;
+            background: #121212;
+            border-left: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .suggestions-sidebar.active {
+            display: block;
+        }
+
+        .suggestions-sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #00f7ef;
+        }
+
+        .suggested-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: rgba(0, 247, 239, 0.05);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .suggested-user:hover {
+            background: rgba(0, 247, 239, 0.1);
+        }
+
+        .suggested-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f7ef, #0084ff);
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .suggested-info {
+            flex: 1;
+        }
+
+        .suggested-info h4 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .suggested-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .suggested-follow {
+            background: #00f7ef;
+            color: #000;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .suggested-follow:hover {
+            background: #00e6de;
+        }
+
+        /* Modal */
+        .modal-custom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-custom.active {
+            display: flex;
+        }
+
+        .modal-content-custom {
+            background: #121212;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            color: white;
+        }
+
+        .modal-content-custom h2 {
+            margin-bottom: 20px;
+            color: #00f7ef;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        .form-group-custom {
+            margin-bottom: 15px;
+        }
+
+        .form-group-custom label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group-custom input,
+        .form-group-custom textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .form-group-custom textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit-custom {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00f7ef, #0084ff);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit-custom:hover {
+            transform: scale(1.02);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .sidebar-nav a span {
+                display: none;
+            }
+
+            .sidebar-nav a {
+                justify-content: center;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+
+            .suggestions-sidebar {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar-logo {
+                font-size: 20px;
+                padding: 10px 0;
+            }
+
+            .sidebar-nav a {
+                padding: 12px;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+
+            .actions-sidebar {
+                right: 10px;
+                gap: 15px;
+            }
+
+            .action-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container-main">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-music"></i> TikClone
+            </div>
+            
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="#" class="nav-link active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="explore">
+                        <i class="fas fa-compass"></i>
+                        <span>Explore</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="following">
+                        <i class="fas fa-users"></i>
+                        <span>Following</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="liked">
+                        <i class="fas fa-heart"></i>
+                        <span>Liked</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-page="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
 
-  <!-- Header -->
-  <div class="top-header d-flex justify-content-between align-items-center">
-    <i class="fa-solid fa-bars fs-4"></i>
-    <h4>Following | <span class="text-danger">For You</span></h4>
-    <i class="fa-solid fa-magnifying-glass fs-4"></i>
-  </div>
-
-  <!-- Videos -->
-  <div class="video-container">
-
-    <!-- Video 1 -->
-    <div class="video-card" style="background-image:url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop');">
-      <div class="overlay"></div>
-
-      <div class="video-info">
-        <h5>@creative_girl</h5>
-        <p>Enjoying beautiful moments ✨ #travel #viral</p>
-        <small><i class="fa-solid fa-music"></i> Trending Sound - TikTok Remix</small>
-      </div>
-
-      <div class="side-icons">
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="profile-img" alt="profile">
-
-        <div class="icon-box like-btn">
-          <i class="fa-solid fa-heart"></i>
-          <span class="like-count">12.5K</span>
+            <div class="sidebar-button">
+                <button class="btn-create" id="createBtn">
+                    <i class="fas fa-plus"></i> Create
+                </button>
+            </div>
         </div>
 
-        <div class="icon-box">
-          <i class="fa-solid fa-comment-dots"></i>
-          <span>890</span>
-        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Feed -->
+            <div class="feed" id="feed">
+                <!-- Video items will be added here -->
+            </div>
 
-        <div class="icon-box">
-          <i class="fa-solid fa-bookmark"></i>
-          <span>Save</span>
+            <!-- Right Sidebar (Suggestions) -->
+            <div class="suggestions-sidebar" id="suggestions">
+                <h3>Users For You</h3>
+                <!-- Suggested users will be added here -->
+            </div>
         </div>
-
-        <div class="icon-box">
-          <i class="fa-solid fa-share"></i>
-          <span>Share</span>
-        </div>
-
-        <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" class="profile-img music" alt="music">
-      </div>
     </div>
 
-    <!-- Video 2 -->
-    <div class="video-card" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop');">
-      <div class="overlay"></div>
+    <!-- Create Modal -->
+    <div class="modal-custom" id="createModal">
+        <div class="modal-content-custom">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <h2>Upload Video</h2>
+            
+            <div class="form-group-custom">
+                <label for="videoTitle">Video Title</label>
+                <input type="text" id="videoTitle" placeholder="Enter video title...">
+            </div>
 
-      <div class="video-info">
-        <h5>@fashion_boy</h5>
-        <p>Street style vibes 🔥 #fashion #reels</p>
-        <small><i class="fa-solid fa-music"></i> Cool Beat - DJ Mix</small>
-      </div>
+            <div class="form-group-custom">
+                <label for="videoDesc">Description</label>
+                <textarea id="videoDesc" placeholder="Add description..."></textarea>
+            </div>
 
-      <div class="side-icons">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="profile-img" alt="profile">
+            <div class="form-group-custom">
+                <label for="videoHashtag">Hashtags</label>
+                <input type="text" id="videoHashtag" placeholder="e.g., #dance #trending">
+            </div>
 
-        <div class="icon-box like-btn">
-          <i class="fa-solid fa-heart"></i>
-          <span class="like-count">9.3K</span>
+            <button class="btn-submit-custom" id="uploadBtn">
+                <i class="fas fa-cloud-upload-alt"></i> Upload
+            </button>
         </div>
-
-        <div class="icon-box">
-          <i class="fa-solid fa-comment-dots"></i>
-          <span>420</span>
-        </div>
-
-        <div class="icon-box">
-          <i class="fa-solid fa-bookmark"></i>
-          <span>Save</span>
-        </div>
-
-        <div class="icon-box">
-          <i class="fa-solid fa-share"></i>
-          <span>Share</span>
-        </div>
-
-        <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" class="profile-img music" alt="music">
-      </div>
     </div>
 
-  </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav d-flex justify-content-around align-items-center">
-    <div class="nav-item">
-      <i class="fa-solid fa-house"></i>
-      <small>Home</small>
-    </div>
+    <script>
+        // Sample video data
+        const videos = [
+            {
+                id: 1,
+                user: 'Ahmed Khan',
+                handle: '@ahmedkhan',
+                avatar: 'A',
+                description: 'Amazing dance move! 🕺 #dancing #viral #fun',
+                music: '♪ Trending Song 1',
+                likes: '125K',
+                comments: '3.2K',
+                shares: '8.5K',
+                color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            },
+            {
+                id: 2,
+                user: 'Fatima Ali',
+                handle: '@fatimaali',
+                avatar: 'F',
+                description: 'Cooking delicious biryani! Yummy 😋 #cooking #food #pakistan',
+                music: '♪ Trending Song 2',
+                likes: '98K',
+                comments: '2.1K',
+                shares: '5.3K',
+                color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+            },
+            {
+                id: 3,
+                user: 'Hassan Raza',
+                handle: '@hassanraza',
+                avatar: 'H',
+                description: 'Gaming moments! Who plays PUBG? #gaming #esports',
+                music: '♪ Trending Song 3',
+                likes: '234K',
+                comments: '5.8K',
+                shares: '12K',
+                color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+            },
+            {
+                id: 4,
+                user: 'Zainab Khan',
+                handle: '@zainabkhan',
+                avatar: 'Z',
+                description: 'Fashion tips for summer! 👗 #fashion #style #trend',
+                music: '♪ Trending Song 4',
+                likes: '156K',
+                comments: '3.5K',
+                shares: '7.2K',
+                color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+            },
+            {
+                id: 5,
+                user: 'Bilal Ahmed',
+                handle: '@bilalahmed',
+                avatar: 'B',
+                description: 'Travel vlog from Northern Pakistan! Beautiful places 🏔️ #travel #pakistan',
+                music: '♪ Trending Song 5',
+                likes: '189K',
+                comments: '4.3K',
+                shares: '9.1K',
+                color: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+            }
+        ];
 
-    <div class="nav-item">
-      <i class="fa-solid fa-compass"></i>
-      <small>Discover</small>
-    </div>
+        const suggestedUsers = [
+            { name: 'Sara Khan', handle: '@sara.khan', followers: '2.5M', avatar: 'S' },
+            { name: 'Ali Raza', handle: '@aliraza', followers: '1.8M', avatar: 'A' },
+            { name: 'Maryam Ali', handle: '@maryam.ali', followers: '3.1M', avatar: 'M' },
+            { name: 'Usman Khan', handle: '@usman_k', followers: '890K', avatar: 'U' }
+        ];
 
-    <div class="nav-item">
-      <i class="fa-solid fa-plus create-btn"></i>
-    </div>
+        // Initialize feed
+        function initializeFeed() {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = '';
 
-    <div class="nav-item">
-      <i class="fa-solid fa-message"></i>
-      <small>Inbox</small>
-    </div>
+            videos.forEach(video => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                videoItem.innerHTML = `
+                    <div class="video-container" style="background: ${video.color}">
+                        <div class="video-placeholder">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        
+                        <div class="video-info">
+                            <div class="user-info">
+                                <div class="user-avatar">${video.avatar}</div>
+                                <div class="user-details">
+                                    <h3>${video.user}</h3>
+                                    <p>${video.handle}</p>
+                                </div>
+                                <button class="follow-btn">Follow</button>
+                            </div>
+                            
+                            <div class="video-description">${video.description}</div>
+                            
+                            <div class="video-music">
+                                <i class="fas fa-music"></i>
+                                ${video.music}
+                            </div>
+                        </div>
 
-    <div class="nav-item">
-      <i class="fa-solid fa-user"></i>
-      <small>Profile</small>
-    </div>
-  </div>
+                        <div class="actions-sidebar">
+                            <div class="action-wrapper">
+                                <button class="action-btn like-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <div class="action-count">${video.likes}</div>
+                            </div>
+                            
+                            <div class="action-wrapper">
+                                <button class="action-btn">
+                                    <i class="far fa-comment"></i>
+                                </button>
+                                <div class="action-count">${video.comments}</div>
+                            </div>
+                            
+                            <div class="action-wrapper">
+                                <button class="action-btn">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                                <div class="action-count">${video.shares}</div>
+                            </div>
 
+                            <div class="action-wrapper">
+                                <button class="action-btn">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                feed.appendChild(videoItem);
 
-  <script>
-    // Like Button Animation
-    document.querySelectorAll('.like-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const icon = btn.querySelector('i');
-
-        if(icon.classList.contains('text-danger')) {
-          icon.classList.remove('text-danger');
-        } else {
-          icon.classList.add('text-danger');
+                // Like button functionality
+                const likeBtn = videoItem.querySelector('.like-btn');
+                let isLiked = false;
+                likeBtn.addEventListener('click', function() {
+                    isLiked = !isLiked;
+                    if (isLiked) {
+                        this.innerHTML = '<i class="fas fa-heart"></i>';
+                        this.style.color = '#ff0040';
+                    } else {
+                        this.innerHTML = '<i class="far fa-heart"></i>';
+                        this.style.color = 'white';
+                    }
+                });
+            });
         }
-      });
-    });
 
-    // Double Click Heart Effect
-    document.querySelectorAll('.video-card').forEach(card => {
-      card.addEventListener('dblclick', (e) => {
-        const heart = document.createElement('i');
-        heart.className = 'fa-solid fa-heart';
-        heart.style.position = 'absolute';
-        heart.style.left = e.clientX - 20 + 'px';
-        heart.style.top = e.clientY - 80 + 'px';
-        heart.style.fontSize = '80px';
-        heart.style.color = '#ff0050';
-        heart.style.zIndex = '999';
-        heart.style.opacity = '1';
-        heart.style.transition = 'all 1s ease';
+        // Initialize suggestions
+        function initializeSuggestions() {
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '<h3>Users For You</h3>';
 
-        card.appendChild(heart);
+            suggestedUsers.forEach(user => {
+                const userElement = document.createElement('div');
+                userElement.className = 'suggested-user';
+                userElement.innerHTML = `
+                    <div class="suggested-avatar">${user.avatar}</div>
+                    <div class="suggested-info">
+                        <h4>${user.name}</h4>
+                        <p>${user.followers} followers</p>
+                    </div>
+                    <button class="suggested-follow">Follow</button>
+                `;
+                suggestions.appendChild(userElement);
 
-        setTimeout(() => {
-          heart.style.opacity = '0';
-          heart.style.transform = 'scale(1.5)';
-        }, 100);
+                userElement.querySelector('.suggested-follow').addEventListener('click', function() {
+                    if (this.textContent === 'Follow') {
+                        this.textContent = 'Following';
+                        this.style.background = '#555';
+                        this.style.color = '#fff';
+                    } else {
+                        this.textContent = 'Follow';
+                        this.style.background = '#00f7ef';
+                        this.style.color = '#000';
+                    }
+                });
+            });
+        }
 
-        setTimeout(() => {
-          heart.remove();
-        }, 1000);
+        // Modal functionality
+        const createBtn = document.getElementById('createBtn');
+        const createModal = document.getElementById('createModal');
+        const closeModal = document.getElementById('closeModal');
+        const uploadBtn = document.getElementById('uploadBtn');
+
+        createBtn.addEventListener('click', function() {
+            createModal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', function() {
+            createModal.classList.remove('active');
+        });
+
+        createModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+
+        uploadBtn.addEventListener('click', function() {
+            const title = document.getElementById('videoTitle').value;
+            if (title.trim()) {
+                alert('Video uploaded successfully! 🎉');
+                createModal.classList.remove('active');
+                document.getElementById('videoTitle').value = '';
+                document.getElementById('videoDesc').value = '';
+                document.getElementById('videoHashtag').value = '';
+            } else {
+                alert('Please enter a video title!');
+            }
+        });
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                const page = this.getAttribute('data-page');
+                console.log('Navigated to:', page);
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                createModal.classList.remove('active');
+            }
+        });
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initializeFeed();
+            initializeSuggestions();
+        });
+    </script>
+</body>
+</html>
