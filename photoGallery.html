@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 24px;
+    }
+
+    /* Header */
+    .g-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .g-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .g-header p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Filter Buttons */
+    .g-filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .g-filters button {
+      padding: 8px 22px;
+      border: 0.5px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      letter-spacing: 0.04em;
+    }
+    .g-filters button:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    .g-filters button.active {
+      background: #ffffff;
+      color: #0f0f0f;
+      border-color: #ffffff;
+    }
+
+    /* Count */
+    .g-count {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Gallery Grid */
+    .g-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Gallery Item */
+    .g-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+      background: #1a1a1a;
+    }
+    .g-item.hidden { display: none; }
+
+    .g-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .g-item:hover img { transform: scale(1.08); }
+
+    /* Overlay */
+    .g-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+    }
+    .g-item:hover .g-item-overlay { opacity: 1; }
+
+    .g-item-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      border: 0.5px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.85);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      background: rgba(255,255,255,0.1);
+      width: fit-content;
+    }
+    .g-item-title {
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* Zoom Icon */
+    .g-item-zoom {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 0.5px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+      color: white;
+    }
+    .g-item:hover .g-item-zoom { opacity: 1; }
+    .g-item-zoom:hover { transform: scale(1.12); background: rgba(255,255,255,0.22); }
+    .g-item-zoom i { font-size: 15px; }
+
+    /* Lightbox */
+    .lb-wrap {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      display: none;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 24px;
+    }
+    .lb-wrap.open { display: flex; }
+
+    .lb-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lb-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .lb-close {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 0.5px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      transition: background 0.2s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.2); }
+    .lb-close i { font-size: 18px; }
+
+    .lb-img-wrap {
+      max-width: 820px;
+      width: 100%;
+    }
+    .lb-img-wrap img {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      max-height: 68vh;
+      object-fit: contain;
+    }
+
+    .lb-bottom {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .lb-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 0.5px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      transition: all 0.2s;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.18); transform: scale(1.06); }
+    .lb-btn i { font-size: 20px; }
+
+    .lb-dots { display: flex; gap: 6px; align-items: center; }
+    .lb-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .lb-dot.active { background: white; width: 18px; border-radius: 4px; }
+
+    .lb-counter {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+      min-width: 50px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .g-grid { grid-template-columns: repeat(2, 1fr); }
+      .g-header h1 { font-size: 2rem; }
+    }
+    @media (max-width: 420px) {
+      .g-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="g-header">
+    <h1>Gallery</h1>
+    <p>A curated visual collection</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="g-filters">
+    <button class="active" data-cat="all">All</button>
+    <button data-cat="nature">Nature</button>
+    <button data-cat="city">City</button>
+    <button data-cat="animals">Animals</button>
+  </div>
+
+  <!-- Count -->
+  <div class="g-count" id="gCount">Showing 6 photos</div>
+
+  <!-- Grid -->
+  <div class="g-grid" id="gGrid">
+
+    <div class="g-item" data-cat="nature" data-title="Mountain River">
+      <img src="https://picsum.photos/id/1015/800/600" alt="Mountain River" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">Nature</span>
+        <span class="g-item-title">Mountain River</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+    <div class="g-item" data-cat="city" data-title="Urban Street">
+      <img src="https://picsum.photos/id/1011/800/600" alt="Urban Street" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">City</span>
+        <span class="g-item-title">Urban Street</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+    <div class="g-item" data-cat="animals" data-title="Wild Bear">
+      <img src="https://picsum.photos/id/1025/800/600" alt="Wild Bear" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">Animals</span>
+        <span class="g-item-title">Wild Bear</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+    <div class="g-item" data-cat="nature" data-title="Forest Path">
+      <img src="https://picsum.photos/id/1039/800/600" alt="Forest Path" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">Nature</span>
+        <span class="g-item-title">Forest Path</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+    <div class="g-item" data-cat="city" data-title="Night Lights">
+      <img src="https://picsum.photos/id/1043/800/600" alt="Night Lights" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">City</span>
+        <span class="g-item-title">Night Lights</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+    <div class="g-item" data-cat="animals" data-title="Black Labrador">
+      <img src="https://picsum.photos/id/237/800/600" alt="Black Labrador" loading="lazy">
+      <div class="g-item-overlay">
+        <span class="g-item-tag">Animals</span>
+        <span class="g-item-title">Black Labrador</span>
+      </div>
+      <div class="g-item-zoom"><i class="ti ti-zoom-in"></i></div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lb-wrap" id="lb">
+    <div class="lb-top">
+      <span class="lb-label" id="lbLabel"></span>
+      <button class="lb-close" id="lbClose"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt="">
+    </div>
+    <div class="lb-bottom">
+      <button class="lb-btn" id="lbPrev"><i class="ti ti-arrow-left"></i></button>
+      <div class="lb-dots" id="lbDots"></div>
+      <button class="lb-btn" id="lbNext"><i class="ti ti-arrow-right"></i></button>
+    </div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+
+  <script>
+    const filterBtns = document.querySelectorAll('.g-filters button');
+    const items = Array.from(document.querySelectorAll('.g-item'));
+    const gCount = document.getElementById('gCount');
+    const lb = document.getElementById('lb');
+    const lbImg = document.getElementById('lbImg');
+    const lbLabel = document.getElementById('lbLabel');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbDots = document.getElementById('lbDots');
+
+    let visibleItems = [];
+    let currentIdx = 0;
+
+    function getVisible() {
+      return items.filter(i => !i.classList.contains('hidden'));
+    }
+
+    function buildDots() {
+      lbDots.innerHTML = '';
+      visibleItems.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'lb-dot' + (i === currentIdx ? ' active' : '');
+        d.onclick = () => { currentIdx = i; showLb(); };
+        lbDots.appendChild(d);
+      });
+    }
+
+    function updateDots() {
+      lbDots.querySelectorAll('.lb-dot').forEach((d, i) => {
+        d.className = 'lb-dot' + (i === currentIdx ? ' active' : '');
+      });
+    }
+
+    function showLb() {
+      const item = visibleItems[currentIdx];
+      const img = item.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbLabel.textContent = item.dataset.title || '';
+      lbCounter.textContent = (currentIdx + 1) + ' / ' + visibleItems.length;
+      updateDots();
+    }
+
+    function openLb(idx) {
+      visibleItems = getVisible();
+      currentIdx = idx;
+      buildDots();
+      showLb();
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        visibleItems = getVisible();
+        const vIdx = visibleItems.indexOf(item);
+        openLb(vIdx >= 0 ? vIdx : 0);
+      });
+    });
+
+    document.getElementById('lbClose').onclick = closeLb;
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+    document.getElementById('lbNext').onclick = () => {
+      currentIdx = (currentIdx + 1) % visibleItems.length;
+      showLb();
+    };
+    document.getElementById('lbPrev').onclick = () => {
+      currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
+      showLb();
+    };
+
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % visibleItems.length; showLb(); }
+      if (e.key === 'ArrowLeft') { currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length; showLb(); }
+      if (e.key === 'Escape') closeLb();
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        let count = 0;
+        items.forEach(item => {
+          const match = cat === 'all' || item.dataset.cat === cat;
+          item.classList.toggle('hidden', !match);
+          if (match) count++;
+        });
+        gCount.textContent = 'Showing ' + count + ' photo' + (count !== 1 ? 's' : '');
+      });
+    });
+  </script>
+
+</body>
+</html>

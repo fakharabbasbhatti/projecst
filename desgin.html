@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marca Herăstrău Residence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ─── Tokens ─────────────────────────────────────────── */
+:root {
+  --gold:        #B8912A;
+  --gold-light:  #D4A843;
+  --cream:       #F5F2EC;
+  --cream-dark:  #EAE6DC;
+  --charcoal:    #1C1C1A;
+  --charcoal-mid:#3A3835;
+  --stone:       #8A8880;
+  --stone-light: #C8C5BE;
+  --white:       #FFFFFF;
+
+  --sans:  'Inter', system-ui, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --nav-h: 64px;
+}
+
+/* ─── Reset ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; width: 100%; }
+button { font-family: var(--sans); cursor: pointer; }
+input, textarea, select {
+  font-family: var(--sans);
+  font-size: 14px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--stone-light);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 80px; }
+
+/* ─── Navigation ─────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(28, 28, 26, 0.96);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(184,145,42,0.2);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 32px;
+  height: 32px;
+}
+.nav-logo-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  text-transform: uppercase;
+}
+.nav-logo-sub {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,242,236,0.65);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-links a.active { color: var(--gold); }
+
+.nav-cta {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: none;
+  border: 1px solid rgba(184,145,42,0.5);
+  padding: 8px 20px;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.nav-cta:hover {
+  background: rgba(184,145,42,0.1);
+  border-color: var(--gold);
+}
+
+/* ─── Page sections ──────────────────────────────────── */
+.page { display: none; padding-top: var(--nav-h); }
+.page.active { display: block; }
+
+/* ─── Eyebrow label ──────────────────────────────────── */
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ─── Hero ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  min-height: 560px;
+  background: var(--charcoal);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #1E2026 0%, #2E2C28 50%, #3A3630 100%);
+  /* Replace with: background-image: url('renders/aerial-north.jpg'); background-size: cover; background-position: center; */
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20,18,16,0.85) 0%, rgba(20,18,16,0.1) 60%, transparent 100%);
+}
+
+.hero-render-label {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(245,242,236,0.4);
+  border: 1px solid rgba(245,242,236,0.15);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 64px;
+  max-width: 720px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.18;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid rgba(184,145,42,0.6);
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.hero-cta:hover {
+  background: rgba(184,145,42,0.12);
+  border-color: var(--gold);
+}
+.hero-cta svg { flex-shrink: 0; }
+
+/* ─── Stats bar ──────────────────────────────────────── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-dark);
+}
+.stat {
+  padding: 24px 20px;
+  text-align: center;
+  border-right: 1px solid var(--cream-dark);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-lbl {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-top: 6px;
+}
+
+/* ─── Content sections ───────────────────────────────── */
+.section {
+  padding: 80px 80px;
+  background: var(--white);
+}
+.section--cream { background: var(--cream); }
+.section--dark {
+  background: var(--charcoal);
+  color: var(--cream);
+}
+
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 300;
+  color: var(--charcoal);
+  line-height: 1.22;
+  margin-bottom: 20px;
+}
+.section--dark .section-heading { color: var(--cream); }
+
+.section-body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--stone);
+  max-width: 580px;
+}
+.section--dark .section-body { color: rgba(245,242,236,0.6); }
+
+.section-divider {
+  height: 1px;
+  background: var(--cream-dark);
+  margin: 0;
+}
+.section-divider--dark { background: rgba(255,255,255,0.08); }
+
+/* ─── Gallery grid ───────────────────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  margin-top: 48px;
+  height: 460px;
+}
+.gallery-item {
+  background: var(--charcoal-mid);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-item--main { grid-row: 1 / 3; }
+.gallery-label {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: rgba(245,242,236,0.4);
+  text-transform: uppercase;
+}
+
+/* Placeholder render fills — replace with <img> tags */
+.render-ph {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(245,242,236,0.12);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.render-ph--1 { background: linear-gradient(145deg, #262420 0%, #3A3632 100%); }
+.render-ph--2 { background: linear-gradient(145deg, #2A2E28 0%, #3E4638 100%); }
+.render-ph--3 { background: linear-gradient(145deg, #282C30 0%, #3C4248 100%); }
+.render-ph--4 { background: linear-gradient(145deg, #2E2824 0%, #44403A 100%); }
+.render-ph--5 { background: linear-gradient(145deg, #242828 0%, #383E3A 100%); }
+
+/* ─── Feature cards ──────────────────────────────────── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 48px;
+  background: var(--cream-dark);
+}
+.card {
+  background: var(--white);
+  padding: 36px 32px;
+}
+.card-img {
+  height: 180px;
+  margin: -36px -32px 28px;
+  overflow: hidden;
+}
+.card-num {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 10px;
+}
+.card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--charcoal);
+  margin-bottom: 10px;
+}
+.card-body {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--stone);
+}
+
+/* ─── Spec grid ──────────────────────────────────────── */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  margin-top: 48px;
+}
+.spec-group-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+.spec-list { list-style: none; }
+.spec-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cream-dark);
+  font-size: 14px;
+  color: var(--charcoal);
+}
+.spec-list li:last-child { border-bottom: none; }
+.spec-bullet {
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ─── Apartment table ────────────────────────────────── */
+.apt-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--stone-light);
+  background: transparent;
+  color: var(--stone);
+  transition: all 0.15s;
+  width: auto;
+}
+.filter-btn:hover { border-color: var(--charcoal); color: var(--charcoal); }
+.filter-btn.active {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--cream);
+}
+
+.apt-table { width: 100%; border-collapse: collapse; }
+.apt-table thead tr {
+  border-bottom: 1px solid var(--cream-dark);
+}
+.apt-table th {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  font-weight: 400;
+  padding: 0 0 14px;
+  text-align: left;
+}
+.apt-table th:last-child { text-align: right; }
+.apt-table tbody tr {
+  border-bottom: 1px solid var(--cream-dark);
+  transition: background 0.1s;
+  cursor: pointer;
+}
+.apt-table tbody tr:last-child { border-bottom: none; }
+.apt-table tbody tr:hover { background: var(--cream); }
+.apt-table td {
+  padding: 18px 0;
+  font-size: 14px;
+  vertical-align: middle;
+}
+.apt-table td:last-child { text-align: right; }
+.apt-name { font-weight: 500; color: var(--charcoal); }
+.apt-sub { font-size: 11px; color: var(--stone); margin-top: 2px; }
+.apt-surface { color: var(--charcoal); }
+.apt-outdoor { color: var(--stone); font-size: 13px; }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.badge--avail { background: #EAF3DE; color: #3B6D11; }
+.badge--reserved { background: var(--cream-dark); color: var(--stone); }
+
+.apt-note {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cream-dark);
+  font-size: 12px;
+  color: var(--stone);
+}
+
+/* ─── Two-col layout ─────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ─── Map placeholder ────────────────────────────────── */
+.map-ph {
+  height: 340px;
+  background: linear-gradient(145deg, #E8E4DC 0%, #D8D4C8 100%);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cream-dark);
+  /* Replace with: <iframe src="https://maps.google.com/..."> or a Mapbox embed */
+}
+.map-pin-group { text-align: center; }
+.map-pin-icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 8px;
+}
+.map-pin-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--charcoal-mid);
+  letter-spacing: 0.04em;
+}
+.map-pin-sub {
+  font-size: 11px;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+/* ─── POI list ───────────────────────────────────────── */
+.poi-list { list-style: none; margin-top: 32px; }
+.poi-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.poi-item:last-child { border-bottom: none; }
+.poi-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+.poi-name { font-size: 14px; font-weight: 500; color: var(--charcoal); }
+.poi-dist { font-size: 12px; color: var(--stone); margin-top: 1px; }
+
+/* ─── Contact form ───────────────────────────────────── */
+.form-row { margin-bottom: 18px; }
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.form-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 7px;
+}
+.form-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--charcoal);
+  color: var(--gold);
+  border: none;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+.form-submit:hover { background: var(--charcoal-mid); }
+
+.contact-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--cream-dark);
+}
+.meta-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 6px;
+  display: block;
+}
+.meta-value { font-size: 14px; color: var(--charcoal); }
+
+/* ─── Footer ─────────────────────────────────────────── */
+footer {
+  background: var(--charcoal);
+  padding: 40px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(184,145,42,0.15);
+}
+.footer-logo {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245,242,236,0.4);
+}
+.footer-note {
+  font-size: 11px;
+  color: rgba(245,242,236,0.25);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* ─── Responsive ─────────────────────────────────────── */
+@media (max-width: 860px) {
+  nav { padding: 0 24px; }
+  .hero-content { padding: 40px 24px; }
+  .section { padding: 56px 24px; }
+  .two-col, .spec-grid, .form-row-2 { grid-template-columns: 1fr; gap: 32px; }
+  .cards { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+  .gallery-item--main { grid-row: auto; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+  .contact-meta { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─── Navigation ─────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="3" fill="#1A1A1A"/>
+      <path d="M16 6L26 14H22V26H10V14H6L16 6Z" fill="#B8912A"/>
+    </svg>
+    <div>
+      <span class="nav-logo-text">Marca Herăstrău</span>
+      <span class="nav-logo-sub">Residence</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" id="nav-home" class="active" onclick="showPage('home');return false">Home</a></li>
+    <li><a href="#" id="nav-arch" onclick="showPage('arch');return false">Architecture</a></li>
+    <li><a href="#" id="nav-res" onclick="showPage('res');return false">Residences</a></li>
+    <li><a href="#" id="nav-loc" onclick="showPage('loc');return false">Location</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('contact')">Request availability</button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE: HOME                                         -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <!-- REPLACE hero-bg div with:
+    <img src="renders/aerial-north.jpg" alt="Marca Herăstrău Residence — aerial view"
+         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"> -->
+    <div class="hero-overlay"></div>
+    <div class="hero-render-label">Render — Bloc A & B, vedere aeriană nord</div>
+    <div class="hero-content">
+      <span class="eyebrow" style="color:rgba(184,145,42,0.85)">Herăstrău · București · 2026</span>
+      <h1 class="hero-title">Contemporary residences designed for quiet urban living.</h1>
+      <a class="hero-cta" href="#" onclick="showPage('res');return false">
+        Discover the residences
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">2</span><span class="stat-lbl">Buildings</span></div>
+    <div class="stat"><span class="stat-num">18</span><span class="stat-lbl">Residences</span></div>
+    <div class="stat"><span class="stat-num">S+P+2+M</span><span class="stat-lbl">Regime</span></div>
+    <div class="stat"><span class="stat-num">2026</span><span class="stat-lbl">Delivery</span></div>
+  </div>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="section-inner two-col">
+      <div>
+        <span class="eyebrow">The project</span>
+        <h2 class="section-heading">Boutique architecture near Herăstrău.</h2>
+        <p class="section-body">Two low-density residential buildings set around a shared green courtyard. Distinctive sloped rooflines, private outdoor spaces, and considered proportions — designed for families and professionals who value design over density.</p>
+        <a class="hero-cta" href="#" onclick="showPage('arch');return false"
+           style="margin-top:32px;display:inline-flex;color:var(--charcoal);border-color:rgba(28,28,26,0.3)">
+          Architecture
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div>
+        <div class="gallery" style="margin-top:0;height:380px">
+          <div class="gallery-item gallery-item--main">
+            <div class="render-ph render-ph--1">Aerial — Bloc A & B</div>
+            <!-- <img src="renders/aerial-frontal.jpg" alt="Vedere aeriană"> -->
+            <span class="gallery-label">Vedere aeriană</span>
+          </div>
+          <div class="gallery-item">
+            <div class="render-ph render-ph--2">Rooftop terrace</div>
+            <!-- <img src="renders/rooftop.jpg" alt="Terasă mansardă"> -->
+            <span class="gallery-label">Terasă mansardă</span>
+          </div>
+          <div class="gallery-item">
+            <div class="render-ph render-ph--3">Garden apartment</div>
+            <!-- <img src="renders/garden.jpg" alt="Apartament grădină"> -->
+            <span class="gallery-label">Apartament grădină</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Highlights strip -->
+  <section class="section section--cream">
+    <div class="section-inner">
+      <div class="cards">
+        <div class="card">
+          <div class="card-img"><div class="render-ph render-ph--2" style="height:180px">Sloped roofline render</div></div>
+          <span class="card-num">01</span>
+          <div class="card-title">Distinctive architecture</div>
+          <p class="card-body">The asymmetric mansard roofline creates a residential character rarely found in Bucharest's new construction — warm, proportioned, unmistakably designed.</p>
+        </div>
+        <div class="card">
+          <div class="card-img"><div class="render-ph render-ph--3" style="height:180px">Garden & terrace render</div></div>
+          <span class="card-num">02</span>
+          <div class="card-title">Private outdoor spaces</div>
+          <p class="card-body">Ground-floor garden apartments with private green areas up to 54 m². Penthouse terraces with panoramic views. Balconies on every intermediate floor.</p>
+        </div>
+        <div class="card">
+          <div class="card-img"><div class="render-ph render-ph--4" style="height:180px">Courtyard render</div></div>
+          <span class="card-num">03</span>
+          <div class="card-title">Low-density living</div>
+          <p class="card-body">Only 18 residences across two buildings. A generous shared courtyard, abundant light, and a calm that larger developments cannot offer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Marca Herăstrău Residence</div>
+    <div class="footer-note">Acest material nu reprezintă o ofertă sau un contract. Suprafețele, finisajele și specificațiile tehnice pot fi modificate fără notificare prealabilă.</div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE: ARCHITECTURE                                 -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page-arch">
+
+  <section class="hero" style="height:55vh;min-height:380px">
+    <div class="hero-bg" style="background:linear-gradient(160deg,#1A1E24 0%,#2E2C28 100%)"></div>
+    <!-- <img src="renders/facade-B-street.jpg" alt="Facade Bloc B" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"> -->
+    <div class="hero-overlay"></div>
+    <div class="hero-render-label">Render — Intrare Bloc B, vedere stradală</div>
+    <div class="hero-content">
+      <span class="eyebrow" style="color:rgba(184,145,42,0.85)">Design</span>
+      <h1 class="hero-title" style="font-size:clamp(28px,4vw,46px)">A distinctive form in northern Bucharest.</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner two-col">
+      <div>
+        <span class="eyebrow">Concept</span>
+        <h2 class="section-heading">Proportions. Light. Material.</h2>
+      </div>
+      <div>
+        <p class="section-body" style="max-width:100%">The asymmetric mansard roofline creates a residential character rarely seen in Bucharest's new construction. Inspired by contemporary European residential typologies — Belgian, Nordic, Northern French — the buildings are calm, breathable, and unmistakably designed. Two volumes, one identity.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section section--cream">
+    <div class="section-inner">
+      <span class="eyebrow">Gallery</span>
+      <div class="gallery" style="margin-top:24px">
+        <div class="gallery-item gallery-item--main">
+          <div class="render-ph render-ph--1">Bloc A — facade</div>
+          <span class="gallery-label">Bloc A, vedere principală</span>
+        </div>
+        <div class="gallery-item">
+          <div class="render-ph render-ph--5">Rooftop</div>
+          <span class="gallery-label">Terasă mansardă</span>
+        </div>
+        <div class="gallery-item">
+          <div class="render-ph render-ph--2">Entry hall</div>
+          <span class="gallery-label">Intrare Bloc B</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <section class="section">
+    <div class="section-inner">
+      <span class="eyebrow">Specifications</span>
+      <div class="spec-grid">
+        <div>
+          <span class="spec-group-label">Structure & envelope</span>
+          <ul class="spec-list">
+            <li><span class="spec-bullet"></span>Reinforced concrete frame</li>
+            <li><span class="spec-bullet"></span>Seismic zone A+ compliance</li>
+            <li><span class="spec-bullet"></span>Triple-pane thermopane glazing</li>
+            <li><span class="spec-bullet"></span>White mineral render façade</li>
+            <li><span class="spec-bullet"></span>Nero Marquina marble cladding at entries</li>
+            <li><span class="spec-bullet"></span>Aluminium composite panels, dark grey</li>
+          </ul>
+        </div>
+        <div>
+          <span class="spec-group-label">Systems & comfort</span>
+          <ul class="spec-list">
+            <li><span class="spec-bullet"></span>VRV heating & cooling per apartment</li>
+            <li><span class="spec-bullet"></span>Mechanical controlled ventilation</li>
+            <li><span class="spec-bullet"></span>Energy class A</li>
+            <li><span class="spec-bullet"></span>Video intercom + proximity access</li>
+            <li><span class="spec-bullet"></span>CCTV common areas</li>
+            <li><span class="spec-bullet"></span>EV charging points in parking</li>
+          </ul>
+        </div>
+        <div>
+          <span class="spec-group-label">Interior finishes</span>
+          <ul class="spec-list">
+            <li><span class="spec-bullet"></span>Delivered semi-finished (white box)</li>
+            <li><span class="spec-bullet"></span>Floor screed ready for tiles / parquet</li>
+            <li><span class="spec-bullet"></span>Plaster walls, white primer</li>
+            <li><span class="spec-bullet"></span>Full electrical distribution per room</li>
+            <li><span class="spec-bullet"></span>Pre-installed AC connections</li>
+          </ul>
+        </div>
+        <div>
+          <span class="spec-group-label">Outdoor & common</span>
+          <ul class="spec-list">
+            <li><span class="spec-bullet"></span>Landscaped shared courtyard</li>
+            <li><span class="spec-bullet"></span>Private gardens — ground floor units</li>
+            <li><span class="spec-bullet"></span>Penthouse terraces with planters</li>
+            <li><span class="spec-bullet"></span>Underground parking, 1 space / apt</li>
+            <li><span class="spec-bullet"></span>Bicycle storage</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Marca Herăstrău Residence</div>
+    <div class="footer-note">Acest material nu reprezintă o ofertă sau un contract. Suprafețele, finisajele și specificațiile tehnice pot fi modificate fără notificare prealabilă.</div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE: RESIDENCES                                   -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page-res">
+
+  <section class="section" style="padding-top:calc(var(--nav-h) + 48px)">
+    <div class="section-inner">
+      <span class="eyebrow">Residences</span>
+      <h2 class="section-heading">Select your apartment.</h2>
+      <p class="section-body">18 apartments across two buildings — garden residences on the ground floor, family apartments, and penthouse collection on the mansard level.</p>
+
+      <!-- Filters -->
+      <div class="apt-filters" style="margin-top:36px">
+        <button class="filter-btn active" onclick="filterApts('all',this)">All</button>
+        <button class="filter-btn" onclick="filterApts('garden',this)">Garden</button>
+        <button class="filter-btn" onclick="filterApts('2cam',this)">2 camere</button>
+        <button class="filter-btn" onclick="filterApts('3cam',this)">3 camere</button>
+        <button class="filter-btn" onclick="filterApts('pent',this)">Penthouse</button>
+      </div>
+
+      <!-- Table -->
+      <table class="apt-table" id="apt-table">
+        <thead>
+          <tr>
+            <th>Apartment</th>
+            <th>Type</th>
+            <th>Surface utila</th>
+            <th>Outdoor</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-A01</div><div class="apt-sub">Bloc A · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">71.13 m²<br><span class="apt-sub">Total 74.16 m²</span></td>
+            <td class="apt-outdoor">Balcon 3.03 m²</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-A02</div><div class="apt-sub">Bloc A · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Balcon</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-A03</div><div class="apt-sub">Bloc A · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Balcon</td>
+            <td><span class="badge badge--reserved">Reserved</span></td>
+          </tr>
+          <tr data-type="garden">
+            <td><div class="apt-name">P-A01</div><div class="apt-sub">Bloc A · Parter — Garden</div></td>
+            <td class="apt-outdoor">Garden</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Grădină · Terasă</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="garden">
+            <td><div class="apt-name">P-A02</div><div class="apt-sub">Bloc A · Parter — Garden</div></td>
+            <td class="apt-outdoor">2 camere + garden</td>
+            <td class="apt-surface">51.79 m²<br><span class="apt-sub">Total 119.97 m²</span></td>
+            <td class="apt-outdoor">Grădină 53.80 m² · Terasă 14.38 m²</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="garden">
+            <td><div class="apt-name">P-A03</div><div class="apt-sub">Bloc A · Parter — Garden</div></td>
+            <td class="apt-outdoor">Garden</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Grădină · Terasă</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-B01</div><div class="apt-sub">Bloc B · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Balcon</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-B02</div><div class="apt-sub">Bloc B · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Balcon</td>
+            <td><span class="badge badge--reserved">Reserved</span></td>
+          </tr>
+          <tr data-type="3cam">
+            <td><div class="apt-name">E1-B03</div><div class="apt-sub">Bloc B · Etaj 1</div></td>
+            <td class="apt-outdoor">3 camere</td>
+            <td class="apt-surface">66.12 m²<br><span class="apt-sub">Total 69.73 m²</span></td>
+            <td class="apt-outdoor">Balcon 3.61 m²</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="2cam garden">
+            <td><div class="apt-name">P-B01</div><div class="apt-sub">Bloc B · Parter — Garden</div></td>
+            <td class="apt-outdoor">2 camere + garden</td>
+            <td class="apt-surface">53.49 m²<br><span class="apt-sub">Total 97.65 m²</span></td>
+            <td class="apt-outdoor">Grădină 36.10 m² · Terasă 8.06 m²</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="garden">
+            <td><div class="apt-name">P-B02</div><div class="apt-sub">Bloc B · Parter — Garden</div></td>
+            <td class="apt-outdoor">Garden</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Grădină · Terasă</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="garden">
+            <td><div class="apt-name">P-B03</div><div class="apt-sub">Bloc B · Parter — Garden</div></td>
+            <td class="apt-outdoor">Garden</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Grădină · Terasă</td>
+            <td><span class="badge badge--reserved">Reserved</span></td>
+          </tr>
+          <tr data-type="pent">
+            <td><div class="apt-name">M-A01</div><div class="apt-sub">Bloc A · Mansardă — Penthouse</div></td>
+            <td class="apt-outdoor">Penthouse</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Terasă privată</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="pent">
+            <td><div class="apt-name">M-A02</div><div class="apt-sub">Bloc A · Mansardă — Penthouse</div></td>
+            <td class="apt-outdoor">Penthouse</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Terasă privată</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="pent">
+            <td><div class="apt-name">M-B01</div><div class="apt-sub">Bloc B · Mansardă — Penthouse</div></td>
+            <td class="apt-outdoor">Penthouse</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Terasă privată</td>
+            <td><span class="badge badge--avail">Available</span></td>
+          </tr>
+          <tr data-type="pent">
+            <td><div class="apt-name">M-B02</div><div class="apt-sub">Bloc B · Mansardă — Penthouse</div></td>
+            <td class="apt-outdoor">Penthouse</td>
+            <td class="apt-surface">— m²</td>
+            <td class="apt-outdoor">Terasă privată</td>
+            <td><span class="badge badge--reserved">Reserved</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="apt-note">
+        Prețuri și disponibilitate la cerere &nbsp;·&nbsp; <a href="#" onclick="showPage('contact');return false" style="color:var(--gold);text-decoration:none">residential@marca-herastrau.ro</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Marca Herăstrău Residence</div>
+    <div class="footer-note">Acest material nu reprezintă o ofertă sau un contract. Suprafețele, finisajele și specificațiile tehnice pot fi modificate fără notificare prealabilă.</div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE: LOCATION                                     -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page-loc">
+
+  <section class="section" style="padding-top:calc(var(--nav-h) + 48px)">
+    <div class="section-inner two-col" style="align-items:start;gap:64px">
+      <div>
+        <span class="eyebrow">Location</span>
+        <h2 class="section-heading">Northern Bucharest's most liveable quarter.</h2>
+        <p class="section-body">Herăstrău – Aviației. Minutes from the park, connected to the business district, close to international schools and the airport. A calm residential address in the best-served part of the city.</p>
+
+        <ul class="poi-list">
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C6.24 2 4 4.24 4 7c0 4.25 5 9 5 9s5-4.75 5-9c0-2.76-2.24-5-5-5Zm0 6.5A1.5 1.5 0 1 1 9 5a1.5 1.5 0 0 1 0 3.5Z" fill="#B8912A"/></svg>
+            </div>
+            <div><div class="poi-name">Herăstrău Park</div><div class="poi-dist">5 min walk — largest urban park in Bucharest</div></div>
+          </li>
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="5" width="12" height="10" rx="1" stroke="#B8912A" stroke-width="1.4"/><path d="M6 5V4a3 3 0 0 1 6 0v1" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div><div class="poi-name">Pipera business district</div><div class="poi-dist">8 min drive — Oracle, Vodafone, SAP campuses</div></div>
+          </li>
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 14V6l6-3 6 3v8" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round"/><rect x="7" y="10" width="4" height="4" rx="0.5" stroke="#B8912A" stroke-width="1.2"/></svg>
+            </div>
+            <div><div class="poi-name">International schools</div><div class="poi-dist">5–12 min — Noblesse, Cambridge School, Mark Twain</div></div>
+          </li>
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 10 L9 4 L15 10" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round"/><path d="M6 10 L6 15 L12 15 L12 10" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div><div class="poi-name">Henri Coandă International Airport</div><div class="poi-dist">20 min drive via DN1 / A3</div></div>
+          </li>
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#B8912A" stroke-width="1.4"/><path d="M9 6v3l2 2" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div><div class="poi-name">Promenada Mall / Băneasa Shopping City</div><div class="poi-dist">10 min — dining, retail, cinema</div></div>
+          </li>
+          <li class="poi-item">
+            <div class="poi-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M9 3v12" stroke="#B8912A" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div><div class="poi-name">A1 / A3 motorway access</div><div class="poi-dist">12 min — direct connection north and west</div></div>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="map-ph">
+          <!-- REPLACE with Google Maps or Mapbox embed:
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!..."
+            width="100%" height="340" style="border:0" allowfullscreen loading="lazy">
+          </iframe> -->
+          <div class="map-pin-group">
+            <svg class="map-pin-icon" viewBox="0 0 44 44" fill="none">
+              <circle cx="22" cy="22" r="22" fill="rgba(184,145,42,0.12)"/>
+              <path d="M22 8C17.03 8 13 12.03 13 17c0 7.44 9 19 9 19s9-11.56 9-19c0-4.97-4.03-9-9-9Zm0 12.5A3.5 3.5 0 1 1 22 13.5a3.5 3.5 0 0 1 0 7Z" fill="#B8912A"/>
+            </svg>
+            <div class="map-pin-label">Marca Herăstrău Residence</div>
+            <div class="map-pin-sub">Str. Aviației, Sector 1, București</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:16px;background:var(--cream);border-radius:var(--radius-md);border:1px solid var(--cream-dark)">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:8px">Neighborhood</div>
+          <div style="font-size:13px;line-height:1.7;color:var(--charcoal-mid)">Aviației is one of Bucharest's most sought-after residential addresses — low-traffic streets, mature trees, embassies, and immediate access to Herăstrău Park. Established, discreet, and consistently in demand.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Marca Herăstrău Residence</div>
+    <div class="footer-note">Acest material nu reprezintă o ofertă sau un contract. Suprafețele, finisajele și specificațiile tehnice pot fi modificate fără notificare prealabilă.</div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGE: CONTACT                                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <section class="section" style="padding-top:calc(var(--nav-h) + 48px)">
+    <div class="section-inner two-col" style="align-items:start;gap:80px">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h2 class="section-heading">Request availability.</h2>
+        <p class="section-body">Prețuri și disponibilitate la cerere. Echipa noastră vă va contacta în termen de 24 de ore.</p>
+
+        <div class="contact-meta" style="grid-template-columns:1fr;gap:20px;margin-top:40px">
+          <div>
+            <span class="meta-label">Email</span>
+            <span class="meta-value">residential@marca-herastrau.ro</span>
+          </div>
+          <div>
+            <span class="meta-label">Website</span>
+            <span class="meta-value">marca-herastrau.ro</span>
+          </div>
+          <div>
+            <span class="meta-label">Program</span>
+            <span class="meta-value">Luni–Vineri, 09:00–18:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form onsubmit="return false">
+          <div class="form-row">
+            <label class="form-label" for="f-name">Name</label>
+            <input id="f-name" type="text" placeholder="First and last name">
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="form-label" for="f-email">Email</label>
+              <input id="f-email" type="email" placeholder="your@email.com">
+            </div>
+            <div>
+              <label class="form-label" for="f-phone">Phone</label>
+              <input id="f-phone" type="tel" placeholder="+40 7xx xxx xxx">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="f-type">Apartment type</label>
+            <select id="f-type">
+              <option value="">Select...</option>
+              <option>Garden apartment (Parter)</option>
+              <option>2-bedroom apartment</option>
+              <option>3-bedroom apartment</option>
+              <option>Penthouse (Mansardă)</option>
+              <option>General information</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="f-msg">Message (optional)</label>
+            <textarea id="f-msg" placeholder="Any specific requirements, preferred floor, budget range..."></textarea>
+          </div>
+          <button class="form-submit" type="submit">Send inquiry</button>
+          <div style="margin-top:14px;font-size:11px;color:var(--stone);line-height:1.6">
+            Prin trimiterea formularului acceptați prelucrarea datelor cu caracter personal în scopul contactării dvs.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Marca Herăstrău Residence</div>
+    <div class="footer-note">Acest material nu reprezintă o ofertă sau un contract. Suprafețele, finisajele și specificațiile tehnice pot fi modificate fără notificare prealabilă.</div>
+  </footer>
+</div>
+
+
+<!-- ─── JS ─────────────────────────────────────────── -->
+<script>
+  /* Page switching */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  /* Apartment filter */
+  function filterApts(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#apt-table tbody tr').forEach(row => {
+      const types = row.dataset.type || '';
+      row.style.display = (type === 'all' || types.includes(type)) ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
