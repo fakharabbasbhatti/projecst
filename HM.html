@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediCare Elite Hospital — Premium Healthcare</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="hp.css" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <span class="brand-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+      <span class="brand-text">MediCare<em>Elite</em></span>
+    </a>
+    <div class="d-flex align-items-center gap-3 order-lg-last">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
+      <a href="#appointment" class="btn btn-primary-med d-none d-md-inline-flex">
+        <i class="fa-solid fa-calendar-check me-2"></i>Book Now
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="toggler-bar"></span><span class="toggler-bar"></span><span class="toggler-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#departments">Departments</a></li>
+        <li class="nav-item"><a class="nav-link" href="#doctors">Doctors</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#emergency">Emergency</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="home" class="hero-section">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1600&q=80" alt="Hospital" class="hero-img" />
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="row align-items-center min-vh-100 pt-5">
+      <div class="col-lg-7" data-aos="fade-up">
+        <div class="hero-badge"><i class="fa-solid fa-shield-heart me-2"></i>Accredited Center of Excellence</div>
+        <h1 class="hero-title">
+          Your Health,<br/>
+          <span class="highlight">Our Priority</span><br/>
+          Always.
+        </h1>
+        <p class="hero-subtitle">World-class medical care with compassion, cutting-edge technology, and a team of 200+ specialist physicians dedicated to your wellbeing.</p>
+        <div class="hero-actions">
+          <a href="#appointment" class="btn btn-primary-med btn-lg">
+            <i class="fa-solid fa-calendar-check me-2"></i>Book Appointment
+          </a>
+          <a href="#contact" class="btn btn-outline-med btn-lg ms-3">
+            <i class="fa-solid fa-phone me-2"></i>Contact Us
+          </a>
+        </div>
+        <div class="hero-stats mt-5">
+          <div class="stat-item">
+            <span class="stat-num counter" data-target="15000">0</span><span class="stat-num">+</span>
+            <span class="stat-label">Patients Served</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num counter" data-target="200">0</span><span class="stat-num">+</span>
+            <span class="stat-label">Expert Doctors</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num counter" data-target="25">0</span><span class="stat-num">+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-flex justify-content-end" data-aos="fade-left">
+        <div class="hero-card-float">
+          <div class="float-card">
+            <i class="fa-solid fa-ambulance text-danger fa-2x"></i>
+            <div>
+              <strong>Emergency 24/7</strong>
+              <span>+92-300-MED-CARE</span>
+            </div>
+          </div>
+          <div class="float-card">
+            <i class="fa-solid fa-user-doctor text-primary fa-2x"></i>
+            <div>
+              <strong>Online Consultation</strong>
+              <span>Available Now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Emergency Banner -->
+  <div class="emergency-banner">
+    <div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div class="d-flex align-items-center gap-3">
+        <div class="pulse-ring"><i class="fa-solid fa-phone-volume"></i></div>
+        <span><strong>24/7 Emergency Helpline:</strong> +92-300-1111-MED</span>
+      </div>
+      <a href="tel:+923001111633" class="btn btn-danger btn-sm">
+        <i class="fa-solid fa-phone me-1"></i>Call Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="section-pad">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="about-img-grid">
+          <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80" alt="Hospital" class="img-main" />
+          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80" alt="Doctor" class="img-secondary" />
+          <div class="experience-badge">
+            <span class="exp-num">25+</span>
+            <span>Years of Excellence</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="section-label"><i class="fa-solid fa-circle-info me-2"></i>About Us</div>
+        <h2 class="section-title">Pioneering Healthcare<br/><span class="highlight">Since 1999</span></h2>
+        <p class="section-desc">MediCare Elite was founded with a singular vision — to deliver world-class healthcare to every patient, regardless of background. Today, we are one of Pakistan's most trusted multi-specialty hospitals, equipped with cutting-edge technology and staffed by internationally trained physicians.</p>
+        <div class="about-features">
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>JCI Accredited Hospital</span></div>
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>ISO 9001:2015 Certified</span></div>
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>200+ Specialist Physicians</span></div>
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>24/7 Emergency Care</span></div>
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>State-of-art ICU & OT</span></div>
+          <div class="feature-item"><i class="fa-solid fa-check-circle"></i><span>Patient-First Philosophy</span></div>
+        </div>
+        <a href="#appointment" class="btn btn-primary-med mt-4">
+          <i class="fa-solid fa-calendar-check me-2"></i>Book an Appointment
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEPARTMENTS ===== -->
+<section id="departments" class="section-pad bg-section">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-hospital me-2"></i>Departments</div>
+      <h2 class="section-title">World-Class <span class="highlight">Specialties</span></h2>
+      <p class="section-desc mx-auto" style="max-width:600px">Our multidisciplinary departments are led by expert physicians with decades of specialized experience.</p>
+    </div>
+    <div class="row g-4 mt-2">
+
+      <!-- Cardiology -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#e74c3c">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <h4>Cardiology</h4>
+          <p>Comprehensive cardiac care including interventional cardiology, electrophysiology, and heart failure management.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Angioplasty & Stenting</li>
+            <li><i class="fa-solid fa-angle-right"></i>Echocardiography</li>
+            <li><i class="fa-solid fa-angle-right"></i>Pacemaker Implantation</li>
+          </ul>
+          <a href="#appointment" class="dept-link">Book Consultation <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Neurology -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#9b59b6">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h4>Neurology</h4>
+          <p>Expert diagnosis and treatment of neurological disorders using advanced imaging and neuro-intervention techniques.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Stroke Management</li>
+            <li><i class="fa-solid fa-angle-right"></i>Epilepsy Treatment</li>
+            <li><i class="fa-solid fa-angle-right"></i>MRI & CT Diagnostics</li>
+          </ul>
+          <a href="#appointment" class="dept-link">Book Consultation <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Orthopedics -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#e67e22">
+            <i class="fa-solid fa-bone"></i>
+          </div>
+          <h4>Orthopedics</h4>
+          <p>From sports injuries to joint replacements, our orthopedic team restores mobility with minimally invasive techniques.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Joint Replacement</li>
+            <li><i class="fa-solid fa-angle-right"></i>Spine Surgery</li>
+            <li><i class="fa-solid fa-angle-right"></i>Sports Medicine</li>
+          </ul>
+          <a href="#appointment" class="dept-link">Book Consultation <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Emergency Care -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="dept-card dept-card-featured">
+          <div class="dept-icon" style="--icon-color:#e74c3c">
+            <i class="fa-solid fa-truck-medical"></i>
+          </div>
+          <h4>Emergency Care</h4>
+          <p>Round-the-clock trauma centre with rapid response teams, advanced life support, and dedicated trauma bays.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Trauma & Resuscitation</li>
+            <li><i class="fa-solid fa-angle-right"></i>Critical Care Unit</li>
+            <li><i class="fa-solid fa-angle-right"></i>Ambulance Services</li>
+          </ul>
+          <a href="#emergency" class="dept-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Pediatrics -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#27ae60">
+            <i class="fa-solid fa-baby"></i>
+          </div>
+          <h4>Pediatrics</h4>
+          <p>Specialized child healthcare from newborns to adolescents, delivered with warmth, precision, and family-centered care.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>NICU & PICU</li>
+            <li><i class="fa-solid fa-angle-right"></i>Child Vaccination</li>
+            <li><i class="fa-solid fa-angle-right"></i>Growth Monitoring</li>
+          </ul>
+          <a href="#appointment" class="dept-link">Book Consultation <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- Dental Care -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#3498db">
+            <i class="fa-solid fa-tooth"></i>
+          </div>
+          <h4>Dental Care</h4>
+          <p>Comprehensive dental services from preventive care to cosmetic dentistry and oral surgeries by specialist dentists.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Orthodontics & Braces</li>
+            <li><i class="fa-solid fa-angle-right"></i>Dental Implants</li>
+            <li><i class="fa-solid fa-angle-right"></i>Cosmetic Dentistry</li>
+          </ul>
+          <a href="#appointment" class="dept-link">Book Consultation <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- ICU & OT -->
+      <div class="col-md-6 col-lg-4 mx-auto" data-aos="fade-up" data-aos-delay="50">
+        <div class="dept-card">
+          <div class="dept-icon" style="--icon-color:#1abc9c">
+            <i class="fa-solid fa-kit-medical"></i>
+          </div>
+          <h4>ICU & Operation Theater</h4>
+          <p>State-of-art ICU with 24/7 intensivist coverage and fully equipped modular OTs with robotic assistance.</p>
+          <ul class="dept-list">
+            <li><i class="fa-solid fa-angle-right"></i>Cardiac ICU</li>
+            <li><i class="fa-solid fa-angle-right"></i>Robotic Surgery OT</li>
+            <li><i class="fa-solid fa-angle-right"></i>Neuro ICU</li>
+          </ul>
+          <a href="#services" class="dept-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPOINTMENT ===== -->
+<section id="appointment" class="section-pad appointment-section">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="section-label"><i class="fa-solid fa-calendar-check me-2"></i>Appointment</div>
+        <h2 class="section-title">Book Your<br/><span class="highlight">Visit Online</span></h2>
+        <p class="section-desc">Skip the queue. Our online booking system lets you choose your preferred doctor, department, date, and time in minutes.</p>
+        <div class="appt-benefits mt-4">
+          <div class="appt-benefit"><i class="fa-solid fa-clock"></i><span>Flexible Scheduling</span></div>
+          <div class="appt-benefit"><i class="fa-solid fa-bell"></i><span>Instant Confirmation</span></div>
+          <div class="appt-benefit"><i class="fa-solid fa-shield-heart"></i><span>No Hidden Charges</span></div>
+          <div class="appt-benefit"><i class="fa-solid fa-rotate-left"></i><span>Easy Rescheduling</span></div>
+        </div>
+        <div class="appt-info-card mt-4">
+          <i class="fa-solid fa-circle-info text-primary"></i>
+          <p class="mb-0 ms-2">Appointment fee is collected at the time of consultation. Online booking is free of charge.</p>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="appt-form-card">
+          <div class="appt-form-header">
+            <i class="fa-solid fa-calendar-check fa-2x"></i>
+            <div>
+              <h4 class="mb-0">Schedule Appointment</h4>
+              <small>Fill in your details below</small>
+            </div>
+          </div>
+          <form id="appointmentForm" class="appt-form" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Patient Full Name <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-user"></i>
+                  <input type="text" class="form-control-med" id="patientName" placeholder="e.g. Ahmad Ali" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-phone"></i>
+                  <input type="tel" class="form-control-med" id="patientPhone" placeholder="+92 3XX XXXXXXX" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Department <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-hospital"></i>
+                  <select class="form-control-med" id="department" required>
+                    <option value="">Select Department</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="neurology">Neurology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="dental">Dental Care</option>
+                    <option value="emergency">Emergency Care</option>
+                    <option value="icu">ICU & Operation Theater</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Select Doctor <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-user-doctor"></i>
+                  <select class="form-control-med" id="doctor" required>
+                    <option value="">Select Doctor</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-calendar"></i>
+                  <input type="date" class="form-control-med" id="apptDate" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Time <span class="text-danger">*</span></label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-clock"></i>
+                  <select class="form-control-med" id="apptTime" required>
+                    <option value="">Select Time Slot</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Additional Notes</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-notes-medical" style="align-self:flex-start;margin-top:12px"></i>
+                  <textarea class="form-control-med" id="apptNotes" rows="3" placeholder="Describe your symptoms or any specific concerns..."></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="availability-indicator" id="availabilityIndicator">
+                  <i class="fa-solid fa-circle-check text-success"></i>
+                  <span>Slots available — select date & time to check</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-med w-100 btn-lg" id="bookBtn">
+                  <i class="fa-solid fa-calendar-check me-2"></i>Confirm Appointment
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAYMENT ===== -->
+<section id="payment" class="section-pad bg-section">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-credit-card me-2"></i>Payment</div>
+      <h2 class="section-title">Easy & Secure <span class="highlight">Payment</span></h2>
+      <p class="section-desc mx-auto" style="max-width:550px">Multiple payment methods for your convenience. All transactions are encrypted and secure.</p>
+    </div>
+    <div class="row g-4 mt-2 justify-content-center">
+      <div class="col-lg-8">
+        <div class="payment-card" data-aos="fade-up">
+          <!-- Fee Summary -->
+          <div class="fee-summary">
+            <h5><i class="fa-solid fa-receipt me-2"></i>Appointment Fee Summary</h5>
+            <div class="fee-row">
+              <span>Consultation Fee</span>
+              <span id="consultFee">Rs. 1,500</span>
+            </div>
+            <div class="fee-row">
+              <span>Registration Fee</span>
+              <span>Rs. 200</span>
+            </div>
+            <div class="fee-row">
+              <span>Applicable Taxes (5%)</span>
+              <span id="taxAmount">Rs. 85</span>
+            </div>
+            <div class="fee-row fee-total">
+              <span>Total Amount</span>
+              <span id="totalAmount">Rs. 1,785</span>
+            </div>
+          </div>
+          <!-- Payment Methods -->
+          <h5 class="mt-4 mb-3"><i class="fa-solid fa-wallet me-2"></i>Select Payment Method</h5>
+          <div class="payment-methods">
+            <div class="pay-method active" data-method="jazzcash" onclick="selectPayment(this,'jazzcash')">
+              <div class="pay-icon" style="background:#e74c3c">
+                <i class="fa-solid fa-mobile-alt fa-lg text-white"></i>
+              </div>
+              <div>
+                <strong>JazzCash</strong>
+                <small>Mobile Wallet</small>
+              </div>
+              <i class="fa-solid fa-circle-check pay-check ms-auto"></i>
+            </div>
+            <div class="pay-method" data-method="easypaisa" onclick="selectPayment(this,'easypaisa')">
+              <div class="pay-icon" style="background:#27ae60">
+                <i class="fa-solid fa-mobile-alt fa-lg text-white"></i>
+              </div>
+              <div>
+                <strong>EasyPaisa</strong>
+                <small>Mobile Wallet</small>
+              </div>
+              <i class="fa-solid fa-circle-check pay-check ms-auto"></i>
+            </div>
+            <div class="pay-method" data-method="card" onclick="selectPayment(this,'card')">
+              <div class="pay-icon" style="background:#3498db">
+                <i class="fa-solid fa-credit-card fa-lg text-white"></i>
+              </div>
+              <div>
+                <strong>Credit / Debit Card</strong>
+                <small>Visa, Mastercard, AMEX</small>
+              </div>
+              <i class="fa-solid fa-circle-check pay-check ms-auto"></i>
+            </div>
+          </div>
+          <!-- Card Fields (shown when card selected) -->
+          <div id="cardFields" class="card-fields d-none mt-4">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Card Number</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-credit-card"></i>
+                  <input type="text" class="form-control-med" placeholder="1234 5678 9012 3456" maxlength="19" id="cardNum" />
+                </div>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Expiry Date</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-calendar"></i>
+                  <input type="text" class="form-control-med" placeholder="MM/YY" maxlength="5" />
+                </div>
+              </div>
+              <div class="col-6">
+                <label class="form-label">CVV</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-lock"></i>
+                  <input type="password" class="form-control-med" placeholder="•••" maxlength="3" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Mobile fields (JazzCash/EasyPaisa) -->
+          <div id="mobileFields" class="card-fields mt-4">
+            <label class="form-label">Registered Mobile Number</label>
+            <div class="input-group-med">
+              <i class="fa-solid fa-mobile-alt"></i>
+              <input type="tel" class="form-control-med" placeholder="+92 3XX XXXXXXX" id="mobilePayNum" />
+            </div>
+          </div>
+          <button class="btn btn-primary-med w-100 btn-lg mt-4" id="payBtn" onclick="processPayment()">
+            <i class="fa-solid fa-lock me-2"></i>Pay Securely — <span id="payBtnAmount">Rs. 1,785</span>
+          </button>
+          <div class="secure-badges mt-3">
+            <span><i class="fa-solid fa-lock text-success me-1"></i>SSL Encrypted</span>
+            <span><i class="fa-solid fa-shield-halved text-primary me-1"></i>PCI DSS Compliant</span>
+            <span><i class="fa-solid fa-circle-check text-success me-1"></i>Trusted Checkout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DOCTORS ===== -->
+<section id="doctors" class="section-pad">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-user-doctor me-2"></i>Our Team</div>
+      <h2 class="section-title">Meet Our <span class="highlight">Expert Doctors</span></h2>
+      <p class="section-desc mx-auto" style="max-width:580px">Internationally trained specialists committed to delivering the highest standard of care.</p>
+    </div>
+    <div class="row g-4 mt-2">
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="50">
+        <div class="doctor-card">
+          <div class="doc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80" alt="Dr. Amir Khan" />
+            <div class="doc-overlay">
+              <a href="#appointment" class="btn btn-sm btn-primary-med">Book Appointment</a>
+            </div>
+          </div>
+          <div class="doc-info">
+            <h5>Dr. Amir Khan</h5>
+            <span class="doc-spec">Senior Cardiologist</span>
+            <div class="doc-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+              <small>4.8 (312 reviews)</small>
+            </div>
+            <div class="doc-meta">
+              <span><i class="fa-solid fa-briefcase-medical me-1"></i>18 yrs exp</span>
+              <span><i class="fa-solid fa-clock me-1"></i>Mon–Sat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="doctor-card">
+          <div class="doc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80" alt="Dr. Sara Malik" />
+            <div class="doc-overlay">
+              <a href="#appointment" class="btn btn-sm btn-primary-med">Book Appointment</a>
+            </div>
+          </div>
+          <div class="doc-info">
+            <h5>Dr. Sara Malik</h5>
+            <span class="doc-spec">Chief Neurologist</span>
+            <div class="doc-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <small>5.0 (189 reviews)</small>
+            </div>
+            <div class="doc-meta">
+              <span><i class="fa-solid fa-briefcase-medical me-1"></i>22 yrs exp</span>
+              <span><i class="fa-solid fa-clock me-1"></i>Tue–Sun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+        <div class="doctor-card">
+          <div class="doc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80" alt="Dr. Hassan Qureshi" />
+            <div class="doc-overlay">
+              <a href="#appointment" class="btn btn-sm btn-primary-med">Book Appointment</a>
+            </div>
+          </div>
+          <div class="doc-info">
+            <h5>Dr. Hassan Qureshi</h5>
+            <span class="doc-spec">Orthopedic Surgeon</span>
+            <div class="doc-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+              <small>4.5 (241 reviews)</small>
+            </div>
+            <div class="doc-meta">
+              <span><i class="fa-solid fa-briefcase-medical me-1"></i>15 yrs exp</span>
+              <span><i class="fa-solid fa-clock me-1"></i>Mon–Fri</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="doctor-card">
+          <div class="doc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80" alt="Dr. Ayesha Raza" />
+            <div class="doc-overlay">
+              <a href="#appointment" class="btn btn-sm btn-primary-med">Book Appointment</a>
+            </div>
+          </div>
+          <div class="doc-info">
+            <h5>Dr. Ayesha Raza</h5>
+            <span class="doc-spec">Pediatric Specialist</span>
+            <div class="doc-rating">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+              <small>4.7 (198 reviews)</small>
+            </div>
+            <div class="doc-meta">
+              <span><i class="fa-solid fa-briefcase-medical me-1"></i>12 yrs exp</span>
+              <span><i class="fa-solid fa-clock me-1"></i>Mon–Sat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EMERGENCY ===== -->
+<section id="emergency" class="emergency-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="section-label light"><i class="fa-solid fa-triangle-exclamation me-2"></i>Emergency Services</div>
+        <h2 class="section-title text-white">Always Ready,<br/><span class="highlight-light">Any Time.</span></h2>
+        <p class="text-white opacity-75">Our emergency department is staffed 24/7 with experienced trauma surgeons, emergency medicine physicians, and critical care nurses. We respond within minutes.</p>
+        <div class="emergency-features">
+          <div class="emerg-feat"><i class="fa-solid fa-siren-on"></i><span>Average Response: &lt;8 minutes</span></div>
+          <div class="emerg-feat"><i class="fa-solid fa-helicopter-symbol"></i><span>Air Ambulance Available</span></div>
+          <div class="emerg-feat"><i class="fa-solid fa-hospital"></i><span>Trauma Level I Centre</span></div>
+          <div class="emerg-feat"><i class="fa-solid fa-kit-medical"></i><span>Advanced Life Support</span></div>
+        </div>
+        <div class="emerg-hotline">
+          <div class="hotline-pulse"><i class="fa-solid fa-phone-volume fa-2x"></i></div>
+          <div>
+            <small class="text-white-50 d-block">24/7 Emergency Hotline</small>
+            <strong class="hotline-num">+92-300-1111-MED</strong>
+          </div>
+        </div>
+        <a href="#" class="btn btn-danger-emerg mt-4" onclick="bookAmbulance()">
+          <i class="fa-solid fa-truck-medical me-2"></i>Book Ambulance Now
+        </a>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <img src="https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=700&q=80" alt="Ambulance" class="emerg-img" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES / FACILITIES ===== -->
+<section id="services" class="section-pad bg-section">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-star-of-life me-2"></i>Facilities</div>
+      <h2 class="section-title">World-Class <span class="highlight">Facilities</span></h2>
+    </div>
+    <div class="row g-4 mt-2">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=500&q=80" alt="Operation Theater" />
+          <div class="service-body">
+            <i class="fa-solid fa-scalpel-line-dashes"></i>
+            <h5>Modern Operation Theaters</h5>
+            <p>12 fully equipped, laminar-flow OTs with robotic surgery capability.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?w=500&q=80" alt="ICU" />
+          <div class="service-body">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h5>Intensive Care Unit</h5>
+            <p>60-bed ICU with continuous monitoring and 24/7 intensivist coverage.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1578496781985-452d4a934d50?w=500&q=80" alt="Laboratory" />
+          <div class="service-body">
+            <i class="fa-solid fa-flask-vial"></i>
+            <h5>Laboratory & Diagnostics</h5>
+            <p>Fully automated lab with STAT service and on-site radiology center.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=500&q=80" alt="Pharmacy" />
+          <div class="service-body">
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+            <h5>In-house Pharmacy</h5>
+            <p>24/7 pharmacy with 5,000+ medications and home delivery option.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80" alt="Patient Rooms" />
+          <div class="service-body">
+            <i class="fa-solid fa-bed-pulse"></i>
+            <h5>Patient Rooms</h5>
+            <p>200+ rooms ranging from general to VIP suites with hotel-level amenities.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&q=80" alt="Online Consultation" />
+          <div class="service-body">
+            <i class="fa-solid fa-video"></i>
+            <h5>Online Consultation</h5>
+            <p>Secure telemedicine platform to consult with any specialist from your home.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" class="section-pad">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-comments me-2"></i>Testimonials</div>
+      <h2 class="section-title">What Patients <span class="highlight">Say About Us</span></h2>
+    </div>
+    <div class="row g-4 mt-2">
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="testimonial-card">
+          <div class="test-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p>"The cardiology team at MediCare Elite saved my life. Dr. Amir Khan performed my angioplasty and the entire team was incredibly professional and caring. I am forever grateful."</p>
+          <div class="test-author">
+            <div class="test-avatar">MR</div>
+            <div>
+              <strong>Muhammad Raza</strong>
+              <small>Cardiac Patient</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-card">
+          <div class="test-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Online booking made everything so easy. The hospital is clean, the staff is warm, and Dr. Sara's expertise in neurology is unmatched. My mother's recovery was remarkable."</p>
+          <div class="test-author">
+            <div class="test-avatar" style="background:#9b59b6">FA</div>
+            <div>
+              <strong>Fatima Akbar</strong>
+              <small>Patient Family</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="testimonial-card">
+          <div class="test-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+          <p>"Brought my son here for pediatric care. The environment is child-friendly, the doctors are patient and thorough, and the facilities are world-class. Highly recommend!"</p>
+          <div class="test-author">
+            <div class="test-avatar" style="background:#27ae60">ZH</div>
+            <div>
+              <strong>Zainab Hussain</strong>
+              <small>Pediatric Patient Mom</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section id="gallery" class="section-pad bg-section">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-images me-2"></i>Gallery</div>
+      <h2 class="section-title">Inside <span class="highlight">MediCare Elite</span></h2>
+    </div>
+    <div class="gallery-grid mt-4" data-aos="fade-up">
+      <div class="gallery-item large">
+        <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&q=80" alt="Hospital Exterior" />
+        <div class="gallery-overlay"><span>Hospital Building</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=500&q=80" alt="Doctors Team" />
+        <div class="gallery-overlay"><span>Medical Team</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=500&q=80" alt="Patient Care" />
+        <div class="gallery-overlay"><span>Patient Care</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1628771065518-0d82f1938462?w=500&q=80" alt="OT" />
+        <div class="gallery-overlay"><span>Operation Theater</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=500&q=80" alt="Doctor Consultation" />
+        <div class="gallery-overlay"><span>Consultation</span></div>
+      </div>
+      <div class="gallery-item large">
+        <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80" alt="Patient Room" />
+        <div class="gallery-overlay"><span>Patient Room</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section-pad">
+  <div class="container">
+    <div class="section-header text-center" data-aos="fade-up">
+      <div class="section-label"><i class="fa-solid fa-envelope me-2"></i>Contact</div>
+      <h2 class="section-title">Get In <span class="highlight">Touch</span></h2>
+    </div>
+    <div class="row g-5 mt-2">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="contact-info-block">
+          <div class="contact-info-item">
+            <div class="ci-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Address</strong>
+              <span>123 Medical Plaza, Main Boulevard, Lahore, Punjab, Pakistan</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <strong>Phone</strong>
+              <span>+92-42-111-MEDICARE<br/>+92-300-1111-MED</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <strong>Email</strong>
+              <span>info@medicareelite.pk<br/>appointments@medicareelite.pk</span>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-icon"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <strong>Working Hours</strong>
+              <span>Mon–Sat: 8:00 AM – 10:00 PM<br/>Emergency: 24/7</span>
+            </div>
+          </div>
+        </div>
+        <!-- Map Embed -->
+        <div class="map-container mt-4">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27227.69814988267!2d74.27857!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="social-links mt-4">
+          <a href="#" class="social-btn" style="--sc:#1877f2"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn" style="--sc:#1da1f2"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="social-btn" style="--sc:#e1306c"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn" style="--sc:#0077b5"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="social-btn" style="--sc:#25d366"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="contact-form-card">
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Your Name</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-user"></i>
+                  <input type="text" class="form-control-med" placeholder="Full Name" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-envelope"></i>
+                  <input type="email" class="form-control-med" placeholder="email@example.com" required />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-phone"></i>
+                  <input type="tel" class="form-control-med" placeholder="+92 3XX XXXXXXX" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Subject</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-tag"></i>
+                  <select class="form-control-med">
+                    <option>General Inquiry</option>
+                    <option>Appointment Query</option>
+                    <option>Billing & Payment</option>
+                    <option>Feedback / Complaint</option>
+                    <option>Medical Records</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message</label>
+                <div class="input-group-med">
+                  <i class="fa-solid fa-message" style="align-self:flex-start;margin-top:12px"></i>
+                  <textarea class="form-control-med" rows="5" placeholder="Write your message here..." required></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-med btn-lg w-100">
+                  <i class="fa-solid fa-paper-plane me-2"></i>Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <div class="footer-brand">
+            <i class="fa-solid fa-heart-pulse"></i>
+            MediCare<em>Elite</em>
+          </div>
+          <p class="footer-about">Delivering compassionate, world-class healthcare to every patient since 1999. Your health is our mission — always.</p>
+          <div class="footer-cert">
+            <span><i class="fa-solid fa-certificate me-1 text-warning"></i>JCI Accredited</span>
+            <span><i class="fa-solid fa-certificate me-1 text-warning"></i>ISO 9001:2015</span>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="footer-heading">Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="#appointment">Appointments</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h6 class="footer-heading">Services</h6>
+          <ul class="footer-links">
+            <li><a href="#services">Facilities</a></li>
+            <li><a href="#emergency">Emergency</a></li>
+            <li><a href="#payment">Payments</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h6 class="footer-heading">Newsletter</h6>
+          <p class="text-muted small">Get health tips and hospital news in your inbox.</p>
+          <div class="newsletter-form">
+            <input type="email" class="form-control-med" placeholder="Your email address" />
+            <button class="btn btn-primary-med">Subscribe</button>
+          </div>
+          <div class="footer-social mt-3">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <span>&copy; 2025 MediCare Elite Hospital. All rights reserved.</span>
+      <span class="d-flex gap-3">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Sitemap</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== SCROLL TO TOP ===== -->
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <i class="fa-solid fa-chevron-up"></i>
+</button>
+
+<!-- ===== APPOINTMENT CONFIRMATION MODAL ===== -->
+<div class="modal fade" id="apptModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content med-modal">
+      <div class="modal-body text-center p-5">
+        <div class="modal-success-icon">
+          <i class="fa-solid fa-circle-check fa-4x text-success"></i>
+        </div>
+        <h3 class="mt-3 mb-2">Appointment Confirmed!</h3>
+        <p class="text-muted mb-4">Your appointment has been successfully booked. You will receive a confirmation SMS and email shortly.</p>
+        <div class="appt-confirm-details" id="apptConfirmDetails"></div>
+        <div class="d-flex gap-3 justify-content-center mt-4">
+          <button class="btn btn-primary-med" onclick="printReceipt()">
+            <i class="fa-solid fa-print me-2"></i>Print Receipt
+          </button>
+          <button class="btn btn-outline-med" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAYMENT SUCCESS MODAL ===== -->
+<div class="modal fade" id="payModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content med-modal">
+      <div class="modal-body text-center p-5">
+        <div class="modal-success-icon">
+          <i class="fa-solid fa-circle-check fa-4x text-success"></i>
+        </div>
+        <h3 class="mt-3 mb-2">Payment Successful!</h3>
+        <p class="text-muted">Your payment has been processed securely. Invoice sent to your registered contact.</p>
+        <div class="invoice-card mt-4" id="invoiceCard"></div>
+        <button class="btn btn-primary-med mt-3" data-bs-dismiss="modal">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="hp.js"></script>
+</body>
+</html>

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricketHub - Indoor Cricket Club Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --blue: #1565C0;
+            --blue-light: #1E88E5;
+            --blue-pale: #E3F2FD;
+            --gold: #C9933A;
+            --gold-light: #E8B96A;
+            --dark: #0B1829;
+            --dark-2: #12243A;
+            --mid: #2C3E50;
+            --text: #374151;
+            --muted: #6B7280;
+            --light: #F9FAFB;
+            --white: #FFFFFF;
+            --border: #E5E7EB;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(21,101,192,0.10);
+            --shadow-lg: 0 12px 48px rgba(21,101,192,0.18);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--light); overflow-x: hidden; }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 3px; }
+
+        /* ── NAV ── */
+        .navbar {
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 0.75rem 0;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .navbar-brand {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.3rem, 3vw, 1.7rem);
+            color: var(--blue) !important;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .brand-icon {
+            width: 36px; height: 36px; background: var(--blue);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1rem;
+        }
+        .nav-link {
+            font-weight: 500; color: var(--text) !important;
+            font-size: 0.92rem; padding: 0.5rem 1rem !important;
+            border-radius: 8px; transition: all 0.2s;
+        }
+        .nav-link:hover { background: var(--blue-pale); color: var(--blue) !important; }
+        .nav-cta {
+            background: var(--blue) !important; color: white !important;
+            border-radius: 8px; padding: 0.5rem 1.2rem !important;
+        }
+        .nav-cta:hover { background: var(--blue-light) !important; }
+        .navbar-toggler { border: 2px solid var(--border); border-radius: 8px; }
+        .navbar-toggler:focus { box-shadow: none; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(11,24,41,0.88) 0%, rgba(21,101,192,0.75) 100%),
+                        url('https://images.unsplash.com/photo-1629974881083-2903db588d92?w=1600&h=900&fit=crop') center/cover no-repeat;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white; position: relative; overflow: hidden;
+            padding: 6rem 1rem 4rem;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 700px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px); padding: 0.4rem 1rem; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;
+            color: var(--gold-light); margin-bottom: 1.5rem;
+            animation: fadeDown 0.8s ease both;
+        }
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.2rem, 7vw, 5rem);
+            line-height: 1.1; margin-bottom: 1.25rem;
+            animation: fadeUp 0.8s ease 0.1s both;
+        }
+        .hero h1 em { color: var(--gold-light); font-style: normal; }
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: rgba(255,255,255,0.8); margin-bottom: 2.5rem;
+            font-weight: 300; line-height: 1.7;
+            animation: fadeUp 0.8s ease 0.2s both;
+        }
+        .hero-btns {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+        .btn-hero-primary {
+            background: var(--gold); color: white; border: none;
+            padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 600;
+            font-size: 1rem; font-family: 'DM Sans', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(201,147,58,0.45);
+        }
+        .btn-hero-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 14px 40px rgba(201,147,58,0.55); }
+        .btn-hero-outline {
+            background: transparent; color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 500;
+            font-size: 1rem; font-family: 'DM Sans', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+        .hero-stats {
+            display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+            margin-top: 4rem; padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            animation: fadeUp 0.8s ease 0.4s both;
+        }
+        .stat-item { text-align: center; }
+        .stat-num { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--gold-light); }
+        .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+        .scroll-hint {
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            animation: bounceY 2s infinite; color: rgba(255,255,255,0.5);
+            font-size: 1.3rem;
+        }
+
+        /* ── BOOKING ── */
+        .booking-section {
+            padding: clamp(3rem, 8vw, 6rem) 0;
+            background: linear-gradient(180deg, #EEF5FF 0%, var(--light) 100%);
+        }
+        .section-eyebrow {
+            display: block; text-align: center;
+            font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--blue-light); margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-align: center; color: var(--dark); margin-bottom: 0.75rem;
+        }
+        .section-sub { text-align: center; color: var(--muted); font-size: 1rem; margin-bottom: 3rem; }
+
+        .booking-card {
+            background: white; border-radius: 24px;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+            max-width: 900px; margin: 0 auto;
+        }
+        .form-label {
+            font-weight: 600; color: var(--dark);
+            font-size: 0.88rem; margin-bottom: 0.6rem;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .form-label i { color: var(--blue-light); }
+        .form-control, .form-select {
+            padding: 0.75rem 1rem; border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem; transition: all 0.2s;
+            background: var(--light);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--blue-light); box-shadow: 0 0 0 3px rgba(30,136,229,0.12);
+            background: white;
+        }
+
+        /* Duration cards */
+        .duration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem; margin-bottom: 1.5rem;
+        }
+        .dur-card {
+            border: 2px solid var(--border); border-radius: var(--radius-sm);
+            padding: 1rem 0.5rem; text-align: center; cursor: pointer;
+            transition: all 0.25s; background: white;
+        }
+        .dur-card:hover { border-color: var(--blue-light); background: var(--blue-pale); }
+        .dur-card.active {
+            border-color: var(--blue); background: var(--blue);
+            color: white; box-shadow: 0 6px 20px rgba(21,101,192,0.3);
+        }
+        .dur-hrs { font-size: 1.4rem; font-weight: 700; font-family: 'DM Serif Display', serif; }
+        .dur-price { font-size: 0.78rem; font-weight: 600; margin-top: 0.25rem; opacity: 0.8; }
+
+        /* Info banners */
+        .info-banner {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.9rem 1.2rem; border-radius: var(--radius-sm);
+            font-size: 0.88rem; margin: 1rem 0;
+        }
+        .info-banner.blue { background: #EBF4FF; border-left: 3px solid var(--blue-light); color: var(--dark-2); }
+        .info-banner.amber { background: #FFF8EC; border-left: 3px solid var(--gold); color: #7A4F00; }
+        .info-banner i { font-size: 1.1rem; flex-shrink: 0; }
+
+        /* Addons */
+        .addon-list { display: flex; flex-direction: column; gap: 0.6rem; }
+        .addon-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.9rem 1rem; background: var(--light);
+            border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s;
+        }
+        .addon-item:hover { border-color: var(--blue-light); background: var(--blue-pale); }
+        .addon-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--blue); flex-shrink: 0; cursor: pointer; }
+        .addon-icon { width: 36px; height: 36px; border-radius: 8px; background: white;
+            border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center;
+            color: var(--blue-light); font-size: 0.95rem; flex-shrink: 0; }
+        .addon-info { flex: 1; min-width: 0; }
+        .addon-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+        .addon-desc { font-size: 0.78rem; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .addon-price { font-weight: 700; color: var(--blue); font-size: 0.9rem; white-space: nowrap; }
+
+        /* Price summary */
+        .price-summary {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+            border-radius: var(--radius); padding: 1.5rem; margin-top: 1.5rem; color: white;
+        }
+        .price-row { display: flex; justify-content: space-between; align-items: center;
+            padding: 0.4rem 0; font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+        .price-row.total {
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 0.9rem; margin-top: 0.5rem;
+            font-size: 1.2rem; font-weight: 700; color: var(--gold-light);
+        }
+        .btn-proceed {
+            width: 100%; padding: 1rem; margin-top: 1.25rem;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            color: white; border: none; border-radius: var(--radius-sm);
+            font-size: 1rem; font-weight: 700; font-family: 'DM Sans', sans-serif;
+            cursor: pointer; transition: all 0.3s;
+            box-shadow: 0 6px 24px rgba(21,101,192,0.4);
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-proceed:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(21,101,192,0.55); }
+        .btn-proceed:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+        /* ── FACILITIES ── */
+        .facilities-section { padding: clamp(3rem, 8vw, 6rem) 0; background: white; }
+        .fac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem; margin-top: 2.5rem;
+        }
+        .fac-card {
+            background: var(--light); border: 1.5px solid var(--border);
+            border-radius: var(--radius); padding: 1.5rem;
+            transition: all 0.3s; cursor: default;
+        }
+        .fac-card:hover { border-color: var(--blue-light); background: white; transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .fac-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.2rem; margin-bottom: 1rem;
+        }
+        .fac-name { font-weight: 700; font-size: 0.95rem; color: var(--dark); margin-bottom: 0.4rem; }
+        .fac-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+        /* ── GALLERY ── */
+        .gallery-section {
+            padding: clamp(3rem, 8vw, 6rem) 0;
+            background: var(--dark);
+        }
+        .gallery-section .section-title { color: white; }
+        .gallery-section .section-sub { color: rgba(255,255,255,0.5); }
+        .gallery-section .section-eyebrow { color: var(--gold-light); }
+        .gallery-masonry {
+            columns: 2; column-gap: 1rem;
+            margin-top: 2.5rem;
+        }
+        @media (min-width: 600px) { .gallery-masonry { columns: 3; } }
+        @media (min-width: 900px) { .gallery-masonry { columns: 4; } }
+        .gallery-item {
+            break-inside: avoid; margin-bottom: 1rem;
+            border-radius: 12px; overflow: hidden;
+            position: relative; cursor: pointer;
+        }
+        .gallery-item img { width: 100%; display: block; transition: transform 0.4s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(21,101,192,0.7), rgba(11,24,41,0.7));
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s; color: white; font-size: 1.5rem;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+        /* ── PACKAGES ── */
+        .packages-section { padding: clamp(3rem, 8vw, 6rem) 0; background: linear-gradient(180deg, #F0F6FF 0%, white 100%); }
+        .pkg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem; margin-top: 2.5rem; align-items: start;
+        }
+        .pkg-card {
+            background: white; border: 2px solid var(--border);
+            border-radius: 20px; padding: 2rem; text-align: center;
+            transition: all 0.3s; position: relative;
+        }
+        .pkg-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow-lg); }
+        .pkg-card.popular {
+            border-color: var(--blue); background: var(--dark);
+            color: white; box-shadow: 0 20px 60px rgba(21,101,192,0.35);
+        }
+        .pkg-badge {
+            display: inline-block; background: var(--gold); color: white;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; padding: 0.35rem 1rem;
+            border-radius: 50px; margin-bottom: 1rem;
+        }
+        .pkg-icon { font-size: 2rem; color: var(--blue-light); margin-bottom: 0.75rem; }
+        .pkg-card.popular .pkg-icon { color: var(--gold-light); }
+        .pkg-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .pkg-price { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--blue); margin-bottom: 0.25rem; }
+        .pkg-card.popular .pkg-price { color: var(--gold-light); }
+        .pkg-duration { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+        .pkg-card.popular .pkg-duration { color: rgba(255,255,255,0.5); }
+        .pkg-features { text-align: left; padding: 1.25rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .pkg-card.popular .pkg-features { border-color: rgba(255,255,255,0.15); }
+        .pkg-feature { display: flex; align-items: center; gap: 0.7rem; font-size: 0.88rem; padding: 0.35rem 0; color: var(--muted); }
+        .pkg-card.popular .pkg-feature { color: rgba(255,255,255,0.7); }
+        .pkg-feature i.fa-check { color: var(--gold); }
+        .pkg-feature i.fa-times { color: #ccc; }
+        .btn-pkg {
+            width: 100%; padding: 0.85rem; border-radius: 50px; border: none;
+            font-weight: 700; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            cursor: pointer; transition: all 0.3s;
+            background: var(--blue-pale); color: var(--blue);
+        }
+        .pkg-card.popular .btn-pkg { background: var(--gold); color: white; box-shadow: 0 6px 20px rgba(201,147,58,0.4); }
+        .btn-pkg:hover { opacity: 0.85; transform: translateY(-2px); }
+
+        /* ── TESTIMONIALS ── */
+        .testimonials-section { padding: clamp(3rem, 8vw, 6rem) 0; background: white; }
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem; margin-top: 2.5rem;
+        }
+        .testi-card {
+            background: var(--light); border: 1.5px solid var(--border);
+            border-radius: var(--radius); padding: 1.75rem; transition: all 0.3s;
+        }
+        .testi-card:hover { border-color: var(--blue-light); background: white; box-shadow: var(--shadow); transform: translateY(-3px); }
+        .testi-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
+        .testi-text { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; }
+        .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+        .author-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1rem; flex-shrink: 0;
+        }
+        .author-name { font-weight: 700; font-size: 0.9rem; color: var(--dark); }
+        .author-title { font-size: 0.78rem; color: var(--muted); }
+
+        /* ── CONTACT ── */
+        .contact-section { padding: clamp(3rem, 8vw, 6rem) 0; background: var(--light); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+        .contact-form-card {
+            background: white; border-radius: var(--radius);
+            padding: clamp(1.5rem, 4vw, 2rem); border: 1.5px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .contact-info-list { display: flex; flex-direction: column; gap: 1.25rem; }
+        .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+        .contact-icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1rem; flex-shrink: 0;
+        }
+        .contact-text h4 { font-weight: 700; font-size: 0.95rem; color: var(--dark); margin-bottom: 0.25rem; }
+        .contact-text p { color: var(--muted); font-size: 0.88rem; margin: 0; line-height: 1.6; }
+        .btn-send {
+            width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            color: white; border: none; border-radius: var(--radius-sm); font-weight: 700;
+            font-family: 'DM Sans', sans-serif; font-size: 1rem; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-send:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,101,192,0.4); }
+
+        /* ── FOOTER ── */
+        footer { background: var(--dark); color: white; padding: clamp(2rem, 6vw, 4rem) 0 1.5rem; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem; margin-bottom: 2.5rem;
+        }
+        .footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: white; margin-bottom: 0.75rem; }
+        .footer-tagline { color: rgba(255,255,255,0.45); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.25rem; }
+        .social-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .social-btn {
+            width: 36px; height: 36px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.6); font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+        }
+        .social-btn:hover { background: var(--blue); border-color: var(--blue); color: white; }
+        .footer-col h6 { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.55rem; }
+        .footer-col ul li a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.88rem; transition: all 0.2s; }
+        .footer-col ul li a:hover { color: white; padding-left: 4px; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 1.5rem; text-align: center;
+            color: rgba(255,255,255,0.3); font-size: 0.82rem;
+        }
+
+        /* ── MODAL ── */
+        .modal-content { border: none; border-radius: 20px; overflow: hidden; }
+        .modal-header { background: linear-gradient(135deg, var(--blue-light), var(--blue)); color: white; border: none; padding: 1.25rem 1.5rem; }
+        .modal-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+        .modal-body { padding: 1.5rem; }
+        .booking-summary { background: var(--light); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.5rem; border: 1.5px solid var(--border); }
+        .booking-summary h6 { font-weight: 700; font-size: 0.88rem; color: var(--dark); margin-bottom: 1rem; }
+        .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: var(--muted); padding: 0.3rem 0; }
+        .summary-row.total { border-top: 1.5px solid var(--border); margin-top: 0.5rem; padding-top: 0.75rem; font-weight: 700; color: var(--blue); font-size: 1rem; }
+        .pay-methods { display: flex; flex-direction: column; gap: 0.6rem; }
+        .pay-method {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1rem; border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s;
+        }
+        .pay-method:hover, .pay-method.active { border-color: var(--blue); background: var(--blue-pale); }
+        .pay-method input { accent-color: var(--blue); cursor: pointer; }
+        .pay-icon { width: 40px; height: 40px; border-radius: 8px; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 1.1rem; flex-shrink: 0; }
+        .pay-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+        .pay-sub { font-size: 0.78rem; color: var(--muted); }
+        .btn-pay {
+            background: linear-gradient(135deg, var(--blue-light), var(--blue)); color: white; border: none;
+            padding: 0.8rem 1.75rem; border-radius: var(--radius-sm); font-weight: 700;
+            font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-pay:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(21,101,192,0.4); }
+
+        /* ── SUCCESS ── */
+        .success-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px); z-index: 2000;
+            display: none; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+        .success-card {
+            background: white; border-radius: 24px; padding: clamp(2rem, 5vw, 3rem);
+            text-align: center; max-width: 380px; width: 100%;
+            animation: scaleUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .success-icon {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: linear-gradient(135deg, #22C55E, #16A34A);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 2rem; margin: 0 auto 1.25rem;
+        }
+        .success-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--dark); margin-bottom: 0.5rem; }
+        .success-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+        .btn-done {
+            margin-top: 1.5rem; padding: 0.85rem 2rem; width: 100%;
+            background: linear-gradient(135deg, var(--blue-light), var(--blue));
+            color: white; border: none; border-radius: var(--radius-sm); font-weight: 700;
+            font-family: 'DM Sans', sans-serif; font-size: 1rem; cursor: pointer;
+        }
+
+        /* ── KEYFRAMES ── */
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceY { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleUp { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+
+        /* ── RESPONSIVE TWEAKS ── */
+        @media (max-width: 576px) {
+            .hero-stats { gap: 1.25rem; }
+            .duration-grid { grid-template-columns: repeat(2, 1fr); }
+            .pkg-grid { grid-template-columns: 1fr; }
+            .pkg-card.popular { transform: none; }
+        }
+        @media (max-width: 400px) {
+            .duration-grid { grid-template-columns: 1fr 1fr; }
+            .addon-desc { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#home">
+            <div class="brand-icon"><i class="fas fa-baseball-ball"></i></div>
+            CricketHub
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
+                <li class="nav-item"><a class="nav-link" href="#packages">Packages</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a class="nav-link nav-cta" href="#booking">Book Now</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-star" style="color:var(--gold-light)"></i> Premium Indoor Cricket</div>
+        <h1>Play Cricket<br><em>Like a Champion</em></h1>
+        <p>Bahawalpur's finest indoor cricket facility — professional turf, 24/7 availability, and world-class amenities for every level of player.</p>
+        <div class="hero-btns">
+            <button class="btn-hero-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+                <i class="fas fa-calendar-check"></i> Book a Slot
+            </button>
+            <button class="btn-hero-outline" onclick="document.getElementById('facilities').scrollIntoView({behavior:'smooth'})">
+                Explore Facilities
+            </button>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Always Open</div></div>
+            <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Members</div></div>
+            <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
+            <div class="stat-item"><div class="stat-num">3yrs</div><div class="stat-label">Experience</div></div>
+        </div>
+    </div>
+    <div class="scroll-hint"><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- ── BOOKING ── -->
+<section class="booking-section" id="booking">
+    <div class="container">
+        <span class="section-eyebrow">Reserve Your Slot</span>
+        <h2 class="section-title">Quick Booking</h2>
+        <p class="section-sub">Select your duration, date & time — and you're set!</p>
+
+        <div class="booking-card">
+
+            <!-- Duration -->
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-hourglass-half"></i> Select Duration</label>
+                <div class="duration-grid">
+                    <div class="dur-card" onclick="selectDuration(2, 2500, this)">
+                        <div class="dur-hrs">2h</div>
+                        <div class="dur-price">Rs. 2,500</div>
+                    </div>
+                    <div class="dur-card" onclick="selectDuration(3, 3500, this)">
+                        <div class="dur-hrs">3h</div>
+                        <div class="dur-price">Rs. 3,500</div>
+                    </div>
+                    <div class="dur-card" onclick="selectDuration(4, 4500, this)">
+                        <div class="dur-hrs">4h</div>
+                        <div class="dur-price">Rs. 4,500</div>
+                    </div>
+                    <div class="dur-card" onclick="selectDuration(5, 5500, this)">
+                        <div class="dur-hrs">5h</div>
+                        <div class="dur-price">Rs. 5,500</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="row g-3 mb-2">
+                <div class="col-sm-6">
+                    <label class="form-label"><i class="fas fa-calendar"></i> Date</label>
+                    <input type="date" class="form-control" id="bookingDate" required>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label"><i class="fas fa-clock"></i> Time Slot</label>
+                    <select class="form-select" id="bookingTime" required>
+                        <option value="">Choose a time…</option>
+                        <option value="06:00">6:00 AM – Morning</option>
+                        <option value="08:00">8:00 AM – Morning</option>
+                        <option value="10:00">10:00 AM – Morning</option>
+                        <option value="12:00">12:00 PM – Afternoon</option>
+                        <option value="14:00">2:00 PM – Afternoon</option>
+                        <option value="16:00">4:00 PM – Evening</option>
+                        <option value="18:00">6:00 PM – Evening</option>
+                        <option value="20:00">8:00 PM – Night</option>
+                        <option value="22:00">10:00 PM – Night</option>
+                        <option value="00:00">12:00 AM – Late Night</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="info-banner blue">
+                <i class="fas fa-clock" style="color:var(--blue-light)"></i>
+                <div><strong>Open 24 Hours</strong> — early morning & late night slots available every day.</div>
+            </div>
+            <div class="info-banner amber">
+                <i class="fas fa-moon" style="color:var(--gold)"></i>
+                <div><strong>Late Night Surcharge:</strong> Rs. 500 extra for bookings after 10 PM.</div>
+            </div>
+
+            <!-- Add-ons -->
+            <label class="form-label mt-2"><i class="fas fa-plus-circle"></i> Optional Add-ons</label>
+            <div class="addon-list">
+                <label class="addon-item">
+                    <input type="checkbox" id="pickDrop" onchange="calcPrice()">
+                    <div class="addon-icon"><i class="fas fa-car"></i></div>
+                    <div class="addon-info">
+                        <div class="addon-name">Pick & Drop</div>
+                        <div class="addon-desc">Transport to & from the ground</div>
+                    </div>
+                    <div class="addon-price">+Rs. 300</div>
+                </label>
+                <label class="addon-item">
+                    <input type="checkbox" id="meal" onchange="calcPrice()">
+                    <div class="addon-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="addon-info">
+                        <div class="addon-name">Meal Package</div>
+                        <div class="addon-desc">Snacks & refreshments</div>
+                    </div>
+                    <div class="addon-price">+Rs. 200</div>
+                </label>
+                <label class="addon-item">
+                    <input type="checkbox" id="equipment" onchange="calcPrice()">
+                    <div class="addon-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="addon-info">
+                        <div class="addon-name">Equipment Rental</div>
+                        <div class="addon-desc">Full cricket gear set</div>
+                    </div>
+                    <div class="addon-price">+Rs. 400</div>
+                </label>
+            </div>
+
+            <!-- Price Summary -->
+            <div class="price-summary">
+                <div class="price-row"><span>Base Rate</span><span id="basePrice">Rs. 0</span></div>
+                <div class="price-row"><span>Add-ons</span><span id="addonPrice">Rs. 0</span></div>
+                <div class="price-row"><span>Late Night Charge</span><span id="latePrice">Rs. 0</span></div>
+                <div class="price-row total"><span>Total</span><span id="totalPrice">Rs. 0</span></div>
+                <button class="btn-proceed" id="proceedBtn" onclick="openPayment()" disabled>
+                    <i class="fas fa-lock"></i> Proceed to Payment
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── FACILITIES ── -->
+<section class="facilities-section" id="facilities">
+    <div class="container">
+        <span class="section-eyebrow">What We Offer</span>
+        <h2 class="section-title">World-Class Facilities</h2>
+        <p class="section-sub">Everything you need for the perfect cricket experience</p>
+        <div class="fac-grid">
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-leaf"></i></div><div class="fac-name">Professional Turf</div><div class="fac-desc">International standard cricket turf for authentic gameplay.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-lightbulb"></i></div><div class="fac-name">LED Flood Lights</div><div class="fac-desc">Energy-efficient LED lighting for night & 24-hour play.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-wind"></i></div><div class="fac-name">Air Conditioning</div><div class="fac-desc">Climate-controlled comfort year-round.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-dumbbell"></i></div><div class="fac-name">Premium Equipment</div><div class="fac-desc">Top-tier bats, gloves, pads and safety gear.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-robot"></i></div><div class="fac-name">Bowling Machine</div><div class="fac-desc">Advanced machine for all-level practice sessions.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-chair"></i></div><div class="fac-name">Spectator Seating</div><div class="fac-desc">Comfortable viewing area for friends & family.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-utensils"></i></div><div class="fac-name">Cafeteria</div><div class="fac-desc">In-house café serving fresh snacks & drinks.</div></div>
+            <div class="fac-card"><div class="fac-icon"><i class="fas fa-shower"></i></div><div class="fac-name">Change Rooms</div><div class="fac-desc">Modern locker rooms with showers & lockers.</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── GALLERY ── -->
+<section class="gallery-section">
+    <div class="container">
+        <span class="section-eyebrow">Our Grounds</span>
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-sub">See the facility in action</p>
+        <div class="gallery-masonry">
+            <div class="gallery-item"><img src="https://scontent.fbhv2-1.fna.fbcdn.net/v/t39.30808-6/474018849_616841287417421_8728203487088176282_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=Z0NNfaSDhAQQ7kNvwGUTGDZ&_nc_oc=AdrJUws0QfYL7oZ0UkQQFnENZhrUkvb0I2ac5KBO4yH64tx2J9jhHpOSMswCLOZ5TKg&_nc_zt=23&_nc_ht=scontent.fbhv2-1.fna&_nc_gid=it4UF2-D0e76cWK9gOKsIQ&_nc_ss=7b289&oh=00_Af4Z0RT2LimlDd0qzMBYGsAxMVPh5hr-jSuCZ7LNOZz0BQ&oe=6A0CFC10" alt="Cricket Ground" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-16.jpg" alt="Indoor Facility" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-3.jpg" alt="Practice Net" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-13.jpg" alt="Players" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-5.jpg" alt="Stadium" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-15.jpg" alt="Courts" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://blubuilt.com.au/wp-content/uploads/2022/11/SICC-10.jpg" alt="Facilities" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+            <div class="gallery-item"><img src="https://mybayutcdn.bayut.com/mybayut/wp-content/uploads/Indoor-cricket-in-Dubai-Cover-13-06.jpg" alt="Game" loading="lazy"><div class="gallery-overlay"><i class="fas fa-expand"></i></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PACKAGES ── -->
+<section class="packages-section" id="packages">
+    <div class="container">
+        <span class="section-eyebrow">Memberships</span>
+        <h2 class="section-title">Choose Your Plan</h2>
+        <p class="section-sub">Flexible memberships for every player</p>
+        <div class="pkg-grid">
+            <div class="pkg-card">
+                <div class="pkg-icon"><i class="fas fa-user"></i></div>
+                <div class="pkg-name">Starter</div>
+                <div class="pkg-price">Rs. 5,000</div>
+                <div class="pkg-duration">Per Month</div>
+                <div class="pkg-features">
+                    <div class="pkg-feature"><i class="fas fa-check"></i> 4 Slots Per Month</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Equipment Discount</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Priority Booking</div>
+                    <div class="pkg-feature" style="opacity:.45"><i class="fas fa-times"></i> Coaching Sessions</div>
+                </div>
+                <button class="btn-pkg">Choose Plan</button>
+            </div>
+
+            <div class="pkg-card popular">
+                <div class="pkg-badge">Most Popular</div>
+                <div class="pkg-icon"><i class="fas fa-users"></i></div>
+                <div class="pkg-name">Professional</div>
+                <div class="pkg-price">Rs. 12,000</div>
+                <div class="pkg-duration">Per Month</div>
+                <div class="pkg-features">
+                    <div class="pkg-feature"><i class="fas fa-check"></i> 10 Slots Per Month</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Free Equipment Rental</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> 2 Coaching Sessions</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> 25% Add-on Discount</div>
+                </div>
+                <button class="btn-pkg">Choose Plan</button>
+            </div>
+
+            <div class="pkg-card">
+                <div class="pkg-icon"><i class="fas fa-star"></i></div>
+                <div class="pkg-name">Elite</div>
+                <div class="pkg-price">Rs. 20,000</div>
+                <div class="pkg-duration">Per Month</div>
+                <div class="pkg-features">
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Unlimited Slots</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Premium Equipment</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> 4 Coaching Sessions</div>
+                    <div class="pkg-feature"><i class="fas fa-check"></i> Personal Trainer</div>
+                </div>
+                <button class="btn-pkg">Choose Plan</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials-section">
+    <div class="container">
+        <span class="section-eyebrow">Reviews</span>
+        <h2 class="section-title">What Players Say</h2>
+        <p class="section-sub">Real reviews from our valued members</p>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="testi-stars">★★★★★</div>
+                <p class="testi-text">"CricketHub is the best indoor cricket facility I've ever played at. The ground quality and equipment are world-class. Highly recommend!"</p>
+                <div class="testi-author">
+                    <div class="author-avatar">FA</div>
+                    <div><div class="author-name">Fakhar Abbas</div><div class="author-title">Professional Player</div></div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">★★★★★</div>
+                <p class="testi-text">"The booking system is easy to use, and the staff is incredibly helpful. Our team has been a member for 2 years and couldn't be happier!"</p>
+                <div class="testi-author">
+                    <div class="author-avatar">WA</div>
+                    <div><div class="author-name">Waqas Abbas</div><div class="author-title">Team Captain</div></div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-stars">★★★★★</div>
+                <p class="testi-text">"24-hour availability is perfect for our corporate team. Facilities are immaculate and the coaching sessions are top-notch!"</p>
+                <div class="testi-author">
+                    <div class="author-avatar">RH</div>
+                    <div><div class="author-name">Rana Hammad</div><div class="author-title">Corporate Manager</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact-section" id="contact">
+    <div class="container">
+        <span class="section-eyebrow">Get In Touch</span>
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-sub">We'd love to hear from you</p>
+        <div class="contact-grid">
+            <div class="contact-form-card">
+                <form onsubmit="handleContact(event)">
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="+92 300 0000000" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" rows="4" placeholder="Your message…" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-send"><i class="fas fa-paper-plane"></i> Send Message</button>
+                </form>
+            </div>
+            <div>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-text"><h4>Address</h4><p>Dilawar Colony, Street No. 4<br>Bahawalpur, Punjab, Pakistan</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-text"><h4>Phone</h4><p>+92 (322) 9234045<br>+92 (308) 6046246</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-text"><h4>Email</h4><p>info@crickethub.com<br>fakharabbasbhatti333@gmail.com</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-text"><h4>Hours</h4><p>Open 24/7 — every single day</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand"><i class="fas fa-baseball-ball" style="color:var(--gold-light);margin-right:0.4rem"></i> CricketHub</div>
+                <p class="footer-tagline">Your ultimate destination for premium indoor cricket experiences in Bahawalpur.</p>
+                <div class="social-links">
+                    <div class="social-btn"><i class="fab fa-facebook"></i></div>
+                    <div class="social-btn"><i class="fab fa-tiktok"></i></div>
+                    <div class="social-btn"><i class="fab fa-instagram"></i></div>
+                    <div class="social-btn"><i class="fab fa-linkedin"></i></div>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h6>Quick Links</h6>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#booking">Book Now</a></li>
+                    <li><a href="#facilities">Facilities</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h6>Services</h6>
+                <ul>
+                    <li><a href="#">Ground Booking</a></li>
+                    <li><a href="#">Coaching Programs</a></li>
+                    <li><a href="#">Team Packages</a></li>
+                    <li><a href="#">Equipment Rental</a></li>
+                    <li><a href="#">Tournament Hosting</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h6>Information</h6>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 CricketHub. All rights reserved. Made with <span style="color:#E57373">❤</span> by Bhatti Developers
+        </div>
+    </div>
+</footer>
+
+<!-- ── PAYMENT MODAL ── -->
+<div class="modal fade" id="paymentModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-lock me-2"></i>Complete Booking</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="booking-summary">
+                    <h6>Booking Summary</h6>
+                    <div class="summary-row"><span>Date & Time</span><span id="sumDateTime">—</span></div>
+                    <div class="summary-row"><span>Duration</span><span id="sumDuration">—</span></div>
+                    <div class="summary-row"><span>Base Price</span><span id="sumBase">Rs. 0</span></div>
+                    <div class="summary-row"><span>Add-ons</span><span id="sumAddons">Rs. 0</span></div>
+                    <div class="summary-row total"><span>Total</span><span id="sumTotal">Rs. 0</span></div>
+                </div>
+                <label class="form-label mb-2">Select Payment Method</label>
+                <div class="pay-methods">
+                    <label class="pay-method active">
+                        <input type="radio" name="payment" value="card" checked>
+                        <div class="pay-icon"><i class="fas fa-credit-card"></i></div>
+                        <div><div class="pay-name">Credit / Debit Card</div><div class="pay-sub">Visa, Mastercard, Amex</div></div>
+                    </label>
+                    <label class="pay-method">
+                        <input type="radio" name="payment" value="jazzcash">
+                        <div class="pay-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div><div class="pay-name">JazzCash</div><div class="pay-sub">Fast mobile payment</div></div>
+                    </label>
+                    <label class="pay-method">
+                        <input type="radio" name="payment" value="easypaisa">
+                        <div class="pay-icon"><i class="fas fa-wallet"></i></div>
+                        <div><div class="pay-name">EasyPaisa</div><div class="pay-sub">Popular in Pakistan</div></div>
+                    </label>
+                    <label class="pay-method">
+                        <input type="radio" name="payment" value="bank">
+                        <div class="pay-icon"><i class="fas fa-university"></i></div>
+                        <div><div class="pay-name">Bank Transfer</div><div class="pay-sub">Direct account transfer</div></div>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn-pay" onclick="processPayment()"><i class="fas fa-lock me-1"></i> Pay Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── SUCCESS ── -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h3>Booking Confirmed!</h3>
+        <p>Your cricket slot has been reserved.<br>A confirmation will be sent to your email shortly.</p>
+        <button class="btn-done" onclick="closeSuccess()">Done</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let dur = 0, baseP = 0;
+
+    function selectDuration(hours, price, el) {
+        dur = hours; baseP = price;
+        document.querySelectorAll('.dur-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        calcPrice();
+    }
+
+    function calcPrice() {
+        let addons = 0, late = 0;
+        if (document.getElementById('pickDrop').checked) addons += 300;
+        if (document.getElementById('meal').checked) addons += 200;
+        if (document.getElementById('equipment').checked) addons += 400;
+        const t = document.getElementById('bookingTime').value;
+        if (t === '22:00' || t === '00:00') late = 500;
+        const total = baseP + addons + late;
+        document.getElementById('basePrice').textContent = 'Rs. ' + baseP.toLocaleString();
+        document.getElementById('addonPrice').textContent = 'Rs. ' + addons.toLocaleString();
+        document.getElementById('latePrice').textContent = 'Rs. ' + late.toLocaleString();
+        document.getElementById('totalPrice').textContent = 'Rs. ' + total.toLocaleString();
+        const date = document.getElementById('bookingDate').value;
+        document.getElementById('proceedBtn').disabled = !(dur > 0 && date && t);
+    }
+
+    document.getElementById('bookingDate').addEventListener('change', calcPrice);
+    document.getElementById('bookingTime').addEventListener('change', calcPrice);
+
+    function openPayment() {
+        const date = document.getElementById('bookingDate').value;
+        const t = document.getElementById('bookingTime').value;
+        let addons = 0, late = 0;
+        if (document.getElementById('pickDrop').checked) addons += 300;
+        if (document.getElementById('meal').checked) addons += 200;
+        if (document.getElementById('equipment').checked) addons += 400;
+        if (t === '22:00' || t === '00:00') late = 500;
+        const total = baseP + addons + late;
+        const d = new Date(date);
+        document.getElementById('sumDateTime').textContent = d.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'}) + ' at ' + t;
+        document.getElementById('sumDuration').textContent = dur + ' Hours';
+        document.getElementById('sumBase').textContent = 'Rs. ' + baseP.toLocaleString();
+        document.getElementById('sumAddons').textContent = 'Rs. ' + addons.toLocaleString();
+        document.getElementById('sumTotal').textContent = 'Rs. ' + total.toLocaleString();
+        // Highlight selected pay method
+        document.querySelectorAll('.pay-method').forEach(el => {
+            el.classList.toggle('active', el.querySelector('input').checked);
+            el.querySelector('input').addEventListener('change', () => {
+                document.querySelectorAll('.pay-method').forEach(e => e.classList.remove('active'));
+                el.classList.add('active');
+            });
+        });
+        new bootstrap.Modal(document.getElementById('paymentModal')).show();
+    }
+
+    function processPayment() {
+        bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+        setTimeout(() => document.getElementById('successOverlay').classList.add('show'), 400);
+    }
+
+    function closeSuccess() {
+        document.getElementById('successOverlay').classList.remove('show');
+        document.querySelectorAll('.dur-card').forEach(c => c.classList.remove('active'));
+        document.getElementById('bookingDate').value = '';
+        document.getElementById('bookingTime').value = '';
+        document.getElementById('pickDrop').checked = false;
+        document.getElementById('meal').checked = false;
+        document.getElementById('equipment').checked = false;
+        dur = 0; baseP = 0; calcPrice();
+    }
+
+    function handleContact(e) {
+        e.preventDefault();
+        alert('Thank you! We will get back to you soon.');
+        e.target.reset();
+    }
+
+    // Set min date
+    document.getElementById('bookingDate').min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
